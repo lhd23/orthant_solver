@@ -9,11 +9,6 @@ Use this code if your number one concern is having a high-precision estimate, ra
 than having something that is fast and reasonably precise.
 This code yields estimates to arbitrary precision.
 
-- Accepts a covariance or precision matrix, nonzero means, and finite or infinite bounds.
-- Returns both the probability and its natural logarithm, with convergence diagnostics.
-- Provides specialized routines for exchangeable precision matrices and equal-correlation models.
-- Includes examples, independent validation, and comparisons with SciPy.
-
 See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
 for the methods and their derivation.
 
@@ -89,8 +84,11 @@ gaussian_probability(
     mean=[0, 0, 0], digits=25,
 )
 ```
-Note that for a nonzero mean include an argument, e.g. `mean=[0.2, -0.3]`.
-Evaluation of higher-dimensional Gaussians and domains are also possible.
+
+- Accepts a covariance or precision matrix, nonzero means, e.g.  e.g. `mean=[0.2, -0.3]`
+- Returns both the probability and its natural logarithm, with convergence diagnostics.
+- Provides specialized routines for exchangeable precision matrices and equal-correlation models.
+- Evaluation of higher-dimensional Gaussians and domains also possible.
 
 In addition to `gaussian_probability` (for boxes with arbitrary lower and upper bounds)
 one can also call:
