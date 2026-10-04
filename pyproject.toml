@@ -10,7 +10,7 @@ requires-python = ">=3.9"
 dependencies = ["mpmath>=1.2", "sympy>=1.12"]
 
 [project.optional-dependencies]
-fast = ["python-flint"]
+fast = ["python-flint>=0.8"]
 test = ["numpy>=1.24", "scipy>=1.10", "pytest>=7"]
 
 [tool.setuptools.packages.find]
@@ -18,3 +18,4 @@ include = ["gaussian_orthant*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["major_change: Botev and SciPy regression campaign to run after major solver changes"]

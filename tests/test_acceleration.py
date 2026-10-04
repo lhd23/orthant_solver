@@ -1,8 +1,9 @@
 """Regression coverage for the optional kernels and transport shortcuts.
 
-Written with the performance changes; not executed during implementation.
 Compiled cases skip when the optional python-flint dependency is absent.
 """
+from types import SimpleNamespace
+
 import pytest
 from mpmath import mp
 
@@ -32,6 +33,19 @@ def test_missing_optional_dependency_falls_back(monkeypatch):
         orthant_probability([[1]], backend="flint")
     with pytest.raises(ValueError, match="backend"):
         equicorrelated_probability(2, backend="unknown")
+
+
+def test_incompatible_compiled_dependency_falls_back(monkeypatch):
+    legacy = SimpleNamespace(arb=object, acb=object, acb_poly=object,
+                             acb_series=object, ctx=object())
+    _kernels._flint.cache_clear()
+    try:
+        monkeypatch.setattr(_kernels, "import_module", lambda name: legacy)
+        assert _kernels.resolve_backend("auto") == "mpmath"
+        with pytest.raises(ImportError, match="polynomial truncation"):
+            _kernels.resolve_backend("flint")
+    finally:
+        _kernels._flint.cache_clear()
 
 
 def test_independent_coordinates_bypass_master_allocation(monkeypatch):
@@ -143,6 +157,24 @@ def test_compiled_kernels_against_direct_integrals(compiled_backend):
         actual_tail = _kernels.normal_interval(mp.mpf(10), mp.mpf(11))
     assert_relative(actual, expected, 50)
     assert_relative(actual_tail, tail, 50)
+    assert (compiled_backend.ctx.prec, compiled_backend.ctx.cap) == old_context
+
+
+@pytest.mark.parametrize("side", ["right", "left", "near_one"])
+def test_compiled_extreme_normal_tail(compiled_backend, side):
+    # Infinite-range quadrature visits these arguments even for ordinary
+    # orthants. A loose ball enclosure must not discard their positive mass.
+    lower, upper = {"right": (mp.mpf(10 ** 8), mp.inf),
+                    "left": (mp.ninf, mp.mpf(-10 ** 8)),
+                    "near_one": (mp.mpf(-10 ** 8), mp.inf)}[side]
+    with mp.workdps(110):
+        tail = mp.erfc(mp.mpf(10 ** 8) / mp.sqrt(2)) / 2
+        expected = 1 - tail if side == "near_one" else tail
+    old_context = compiled_backend.ctx.prec, compiled_backend.ctx.cap
+    with mp.workdps(70):
+        actual = _kernels.normal_interval(lower, upper)
+    assert actual > 0
+    assert_relative(actual, expected, 65)
     assert (compiled_backend.ctx.prec, compiled_backend.ctx.cap) == old_context
 
 

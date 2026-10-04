@@ -14,6 +14,8 @@ def _flint():
     required = ("arb", "acb", "acb_poly", "acb_series", "ctx")
     if not all(hasattr(module, name) for name in required):
         return None
+    if not callable(getattr(module.acb_poly, "truncate", None)):
+        return None
     return module
 
 
@@ -25,7 +27,8 @@ def resolve_backend(backend):
     if _flint() is not None:
         return "flint"
     if backend == "flint":
-        raise ImportError("backend='flint' requires python-flint with complex power-series support")
+        raise ImportError("backend='flint' requires python-flint with complex power-series "
+                          "and polynomial truncation support")
     return "mpmath"
 
 
@@ -120,7 +123,20 @@ def normal_interval(lower, upper):
         left = module.acb(2) if lower == mp.ninf else (_complex_ball(lower, module) / root).erfc()
         right = module.acb(0) if upper == mp.inf else (_complex_ball(upper, module) / root).erfc()
         return (left - right) / 2
-    return mp.re(_evaluate(evaluate))
+    from .common import ConvergenceError, normal_interval as python_interval
+    try:
+        return mp.re(_evaluate(evaluate))
+    except ConvergenceError:
+        # Arb can return only an absolute enclosure for enormous tail
+        # arguments visited by infinite-interval quadrature. Preserve that
+        # tiny mass using the independent arbitrary-precision real formula.
+        # Squaring large arguments amplifies rounding in the exponential;
+        # supply enough guard bits to resolve the requested relative mass.
+        magnitude = max((mp.mag(x) for x in (lower, upper)
+                         if mp.isfinite(x) and x != 0), default=0)
+        with mp.workprec(mp.prec + max(0, 2 * magnitude) + 32):
+            value = python_interval(lower, upper, backend="mpmath")
+        return +value
 
 
 def exponential_interval(a, s, lower, upper):
