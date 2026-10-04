@@ -32,18 +32,35 @@ This requires a Python version supported by `python-flint>=0.8`.
 
 ## Usage
 
+Evaluate the eight domains labelled (a)-(h) in the banner using the bounds below.
+These examples use zero means and illustrative covariance matrices. Sawtooth
+edges indicate infinite bounds, rather than the edge of the drawing.
+
 ```python
-from gaussian_orthant import orthant_probability, gaussian_probability
+from gaussian_orthant import gaussian_probability
 
-# Probability that both coordinates are positive.
-result = orthant_probability([[1, "0.5"], ["0.5", 1]], digits=25)
-print(result.as_dict())
+covariance = {
+    2: [[1, "0.5"], ["0.5", 1]],
+    3: [[1, "0.5", "0.5"], ["0.5", 1, "0.5"], ["0.5", "0.5", 1]],
+}
 
-# Probability of a finite box.
-result = gaussian_probability(
-    [0, 0], [1, 1], covariance=[[1, "0.5"], ["0.5", 1]], digits=25
-)
-print(result.as_dict())
+# Each entry supplies the panel name, lower bounds, and upper bounds.
+domains = [
+    ("(a) Positive orthant",       [0, 0],          ["inf", "inf"]),
+    ("(b) Shifted mixed orthant", ["0.6", "-inf"], ["inf", "0.8"]),
+    ("(c) Finite box",            ["-0.9", "-0.7"], ["1.2", "1.3"]),
+    ("(d) Semi-infinite box",     [-1, "-0.6"],     [1, "inf"]),
+    ("(e) Unbounded strip",       ["-inf", "-0.7"], ["inf", 1]),
+    ("(f) Positive orthant (3 dimensions)", [0, 0, 0], ["inf"] * 3),
+    ("(g) Finite box (3 dimensions)", [0, 0, 0], ["1.7", "1.6", "1.6"]),
+    ("(h) Semi-infinite box (3 dimensions)", [0, 0, 0], ["1.7", "1.6", "inf"]),
+]
+
+for name, lower, upper in domains:
+    result = gaussian_probability(
+        lower, upper, covariance=covariance[len(lower)], digits=25
+    )
+    print(name, result.as_dict())
 ```
 
 The four public functions are:
