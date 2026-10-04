@@ -1,10 +1,11 @@
 ![Examples of Gaussian integration domains: orthants, finite boxes, semi-infinite boxes, and unbounded strips in two and three dimensions.](output/images/gaussian_domains.png)
 
-# Gaussian orthant probabilities using BootLoops
+# Gaussian orthant probabilities
 
 Compute multivariate Gaussian orthant and box probabilities with configurable
 arbitrary precision. The package uses [BootLoops](https://github.com/BootLoops-ai/bootloops)
 for numerical integration and transport, and SymPy for symbolic preparation.
+Use this code if you need high precision and runtime is not a major concern.
 
 - Accepts a covariance or precision matrix, nonzero means, and finite or infinite bounds.
 - Returns both the probability and its natural logarithm, with convergence diagnostics.
@@ -30,71 +31,79 @@ This requires a Python version supported by `python-flint>=0.8`.
 
 ## Usage
 
-Evaluate the eight domains labelled (a)-(h) in the banner using the bounds below.
-These examples use zero means and illustrative covariance matrices. Sawtooth
-edges indicate infinite bounds, rather than the edge of the drawing.
+To evaluate the eight domains labelled (a)-(h) in the banner:
 
 ```python
 from gaussian_orthant import gaussian_probability
 
 # (a) Positive orthant
-a = gaussian_probability(
+gaussian_probability(
     lower=[0, 0], upper=["inf", "inf"],
     covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
 )
 
 # (b) Shifted mixed orthant
-b = gaussian_probability(
+gaussian_probability(
     lower=["0.6", "-inf"], upper=["inf", "0.8"],
     covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
 )
 
 # (c) Finite box
-c = gaussian_probability(
+gaussian_probability(
     lower=["-0.9", "-0.7"], upper=["1.2", "1.3"],
     covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
 )
 
 # (d) Semi-infinite box
-d = gaussian_probability(
+gaussian_probability(
     lower=[-1, "-0.6"], upper=[1, "inf"],
     covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
 )
 
 # (e) Unbounded strip
-e = gaussian_probability(
+gaussian_probability(
     lower=["-inf", "-0.7"], upper=["inf", 1],
     covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
 )
 
 # (f) Positive orthant (3 dimensions)
-f = gaussian_probability(
+gaussian_probability(
     lower=[0, 0, 0], upper=["inf", "inf", "inf"],
     covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
     mean=[0, 0, 0], digits=25,
 )
 
 # (g) Finite box (3 dimensions)
-g = gaussian_probability(
+gaussian_probability(
     lower=[0, 0, 0], upper=["1.7", "1.6", "1.6"],
     covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
     mean=[0, 0, 0], digits=25,
 )
 
 # (h) Semi-infinite box (3 dimensions)
-h = gaussian_probability(
+gaussian_probability(
     lower=[0, 0, 0], upper=["1.7", "1.6", "inf"],
     covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
     mean=[0, 0, 0], digits=25,
 )
 ```
+Note that for a nonzero mean include an argument, e.g. `mean=[0.2, -0.3]`.
+Evaluation of higher-dimensional Gaussians and domains are also possible.
 
-The four public functions are:
+In addition to `gaussian_probability` (for boxes with arbitrary lower and upper bounds)
+one can also call:
 
 - `orthant_probability`: positive or negative orthants, with optional thresholds.
-- `gaussian_probability`: boxes with arbitrary lower and upper bounds.
 - `exchangeable_precision_probability`: equal finite bounds with an exchangeable precision matrix.
 - `equicorrelated_probability`: equal bounds and nonnegative equal correlations.
+
+For faster evaluation, specify `rtol` instead of `digits`, for example
+`equicorrelated_probability(10, correlation=0.5, rtol=1e-6)`. This targets an
+estimated relative probability error of one part in a million. The result
+includes `rtol` and `estimated_relative_error`; these are convergence estimates,
+not certified error bounds. This mode does not separately target relative
+accuracy in `log_probability`; `digits` in the result controls display precision.
+Without `rtol`, the existing digit mode is used.
 
 Use decimal strings or `fractions.Fraction` when inputs need more precision
 than ordinary floating-point numbers. Use `result.as_dict()` to display the
@@ -111,6 +120,7 @@ python3 compare_solvers.py
 The comparison script calls all four functions and prints probabilities,
 independently measured relative errors, and runtimes alongside SciPy.
 Use `--digits 8 10` to compare multiple accuracy targets, or
+`--rtol 1e-4 1e-6` to compare the faster tolerance mode, and
 `--match-achieved` to require comparable achieved errors. A shared requested
 accuracy does not guarantee that both solvers achieve the same error.
 
