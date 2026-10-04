@@ -3,9 +3,10 @@
 # Gaussian orthant probabilities
 
 Compute multivariate Gaussian orthant and box probabilities with configurable
-arbitrary precision. The package uses [BootLoops](https://github.com/BootLoops-ai/bootloops)
+precision. The package uses [BootLoops](https://github.com/BootLoops-ai/bootloops)
 for numerical integration and transport, and SymPy for symbolic preparation.
-Use this code if you need high precision and runtime is not a major concern.
+Use this code if your main concern is precision. This code yields estimates to
+your chosen precision (if you don't mind the runtime).
 
 - Accepts a covariance or precision matrix, nonzero means, and finite or infinite bounds.
 - Returns both the probability and its natural logarithm, with convergence diagnostics.
