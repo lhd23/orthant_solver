@@ -1,0 +1,1843 @@
+{
+  "requested_digits": 25,
+  "timing_note": "Single unprofiled calls after importing engines; profiling a second call adds overhead. Cumulative percentages overlap for nested functions and must not be added. Node and symbolic caches can affect timings. Independent validation oracles are excluded.",
+  "source_sha256": {
+    "gaussian_orthant/transport.py": "cbea60e7a047620c1c4f160caba8c211a7e48586a83c5d95ff726103e268bd90",
+    "gaussian_orthant/__init__.py": "e4ea8ca81f03b8e5a0c8cde97dc45a9edffd7d9b6e32c88ba207c231acd0c3da",
+    "gaussian_orthant/common.py": "ef1be210827a7915e03d940c0ef3df545cf34d20b16e534d9397a564d3826e73",
+    "gaussian_orthant/structured.py": "5d4e2c5570159f12ed2b1e11a903c327490333c3f7517ef8cf8d8c6b2d6b89fe",
+    "gaussian_orthant/_bootloops.py": "c0f408a5e86ec33ba879be09dd1d97b280ccc8d049b6ff1dfa3f71c10c876d34",
+    "gaussian_orthant/__main__.py": "8cf493827e65774791212eeef2034df78bfc1f5bd423ed77a69877b0d973a37d"
+  },
+  "records": [
+    {
+      "case": "boundary_banded_3",
+      "unprofiled_seconds": 1.996767625,
+      "profiled_seconds": 3.9529443289999966,
+      "masters": 27,
+      "probability": "0.02307072735939417709903235",
+      "selected_functions": [
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 70,
+          "function": "centered_interval_moments",
+          "calls": 54,
+          "own_seconds": 0.013901432,
+          "cumulative_seconds": 0.12049812600000001,
+          "cumulative_percent": 3.048313256424819
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 234,
+          "function": "A_series",
+          "calls": 4,
+          "own_seconds": 0.004519006,
+          "cumulative_seconds": 0.514443459,
+          "cumulative_percent": 13.014184268315823
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 183,
+          "function": "normalized",
+          "calls": 2,
+          "own_seconds": 0.000719634,
+          "cumulative_seconds": 0.143101792,
+          "cumulative_percent": 3.620131731938695
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 82,
+          "function": "__init__",
+          "calls": 1,
+          "own_seconds": 0.000753506,
+          "cumulative_seconds": 0.22180891700000002,
+          "cumulative_percent": 5.611233008589133
+        },
+        {
+          "file": "bootloops/tools/wayfinder/ratfun.py",
+          "line": 121,
+          "function": "__init__",
+          "calls": 154,
+          "own_seconds": 9.854500000000001e-05,
+          "cumulative_seconds": 0.0008260030000000001,
+          "cumulative_percent": 0.020895892561405227
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 411,
+          "function": "_march_leg",
+          "calls": 2,
+          "own_seconds": 0.105635565,
+          "cumulative_seconds": 3.572763708,
+          "cumulative_percent": 90.3823431508793
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 300,
+          "function": "_local_a_series",
+          "calls": 4,
+          "own_seconds": 0.006166378,
+          "cumulative_seconds": 1.710103791,
+          "cumulative_percent": 43.26151973490142
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "<stdin>",
+          "line": 10,
+          "function": "<lambda>",
+          "calls": 1,
+          "own_seconds": 2.041e-06,
+          "cumulative_seconds": 3.9545244580000003,
+          "cumulative_percent": 100.03997346960875
+        },
+        {
+          "file": "gaussian_orthant/__init__.py",
+          "line": 12,
+          "function": "gaussian_probability",
+          "calls": 1,
+          "own_seconds": 5.1084e-05,
+          "cumulative_seconds": 3.954522417,
+          "cumulative_percent": 100.03992183720945
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 248,
+          "function": "transport_probability",
+          "calls": 1,
+          "own_seconds": 8.4626e-05,
+          "cumulative_seconds": 3.9544713330000003,
+          "cumulative_percent": 100.03862953466867
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 847,
+          "function": "transport_fixed_eps",
+          "calls": 2,
+          "own_seconds": 0.000991504,
+          "cumulative_seconds": 3.5875294170000003,
+          "cumulative_percent": 90.75588013422801
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 411,
+          "function": "_march_leg",
+          "calls": 2,
+          "own_seconds": 0.105635565,
+          "cumulative_seconds": 3.572763708,
+          "cumulative_percent": 90.3823431508793
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 440,
+          "function": "__eq__",
+          "calls": 590271,
+          "own_seconds": 0.538947295,
+          "cumulative_seconds": 1.9369955810000001,
+          "cumulative_percent": 49.00133722576395
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 300,
+          "function": "_local_a_series",
+          "calls": 4,
+          "own_seconds": 0.006166378,
+          "cumulative_seconds": 1.710103791,
+          "cumulative_percent": 43.26151973490142
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 449,
+          "function": "__ne__",
+          "calls": 333410,
+          "own_seconds": 0.059311287000000004,
+          "cumulative_seconds": 1.174863403,
+          "cumulative_percent": 29.72122309896566
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.any>",
+          "calls": 6475,
+          "own_seconds": 0.009333014,
+          "cumulative_seconds": 0.691870439,
+          "cumulative_percent": 17.502660837498492
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 321,
+          "function": "<genexpr>",
+          "calls": 175404,
+          "own_seconds": 0.023764732,
+          "cumulative_seconds": 0.675184758,
+          "cumulative_percent": 17.08055317264754
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 366,
+          "function": "__new__",
+          "calls": 219791,
+          "own_seconds": 0.171512558,
+          "cumulative_seconds": 0.5538854940000001,
+          "cumulative_percent": 14.011973048457282
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 432,
+          "function": "mpc_convert_lhs",
+          "calls": 615358,
+          "own_seconds": 0.103413449,
+          "cumulative_seconds": 0.531637125,
+          "cumulative_percent": 13.449142733929975
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 234,
+          "function": "A_series",
+          "calls": 4,
+          "own_seconds": 0.004519006,
+          "cumulative_seconds": 0.514443459,
+          "cumulative_percent": 13.014184268315823
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 320,
+          "function": "<listcomp>",
+          "calls": 2916,
+          "own_seconds": 0.039852162000000003,
+          "cumulative_seconds": 0.5061180630000001,
+          "cumulative_percent": 12.803571739853878
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 491,
+          "function": "__mul__",
+          "calls": 161375,
+          "own_seconds": 0.072184963,
+          "cumulative_seconds": 0.504039965,
+          "cumulative_percent": 12.751000850232325
+        },
+        {
+          "file": "bootloops/tools/wayfinder/ratfun.py",
+          "line": 169,
+          "function": "taylor",
+          "calls": 308,
+          "own_seconds": 0.000405275,
+          "cumulative_seconds": 0.46458607700000004,
+          "cumulative_percent": 11.752912217651433
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 621,
+          "function": "convert",
+          "calls": 615853,
+          "own_seconds": 0.232213887,
+          "cumulative_seconds": 0.428452054,
+          "cumulative_percent": 10.838808198151085
+        },
+        {
+          "file": "bootloops/tools/wayfinder/ratfun.py",
+          "line": 95,
+          "function": "pseries_div",
+          "calls": 308,
+          "own_seconds": 0.032811779,
+          "cumulative_seconds": 0.42453067200000005,
+          "cumulative_percent": 10.739606649289607
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__eq__",
+          "calls": 948528,
+          "own_seconds": 0.227211976,
+          "cumulative_seconds": 0.400899861,
+          "cumulative_percent": 10.141803871581931
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 145,
+          "function": "mpc_mul",
+          "calls": 136600,
+          "own_seconds": 0.10315429000000001,
+          "cumulative_seconds": 0.378773218,
+          "cumulative_percent": 9.582052932574966
+        }
+      ],
+      "top_own": [
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 440,
+          "function": "__eq__",
+          "calls": 590271,
+          "own_seconds": 0.538947295,
+          "cumulative_seconds": 1.9369955810000001,
+          "cumulative_percent": 49.00133722576395
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 621,
+          "function": "convert",
+          "calls": 615853,
+          "own_seconds": 0.232213887,
+          "cumulative_seconds": 0.428452054,
+          "cumulative_percent": 10.838808198151085
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__eq__",
+          "calls": 948528,
+          "own_seconds": 0.227211976,
+          "cumulative_seconds": 0.400899861,
+          "cumulative_percent": 10.141803871581931
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 595,
+          "function": "make_mpf",
+          "calls": 1930655,
+          "own_seconds": 0.22716676400000002,
+          "cumulative_seconds": 0.354466881,
+          "cumulative_percent": 8.96716096909141
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method __new__ of type object at 0x102ea2860>",
+          "calls": 2965277,
+          "own_seconds": 0.20433277100000002,
+          "cumulative_seconds": 0.20433277100000002,
+          "cumulative_percent": 5.169128477245504
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 366,
+          "function": "__new__",
+          "calls": 219791,
+          "own_seconds": 0.171512558,
+          "cumulative_seconds": 0.5538854940000001,
+          "cumulative_percent": 14.011973048457282
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 523793,
+          "own_seconds": 0.15060372700000002,
+          "cumulative_seconds": 0.332843726,
+          "cumulative_percent": 8.420147067545516
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 47,
+          "function": "__new__",
+          "calls": 441578,
+          "own_seconds": 0.14205593600000002,
+          "cumulative_seconds": 0.23018537400000003,
+          "cumulative_percent": 5.823137257747104
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 378,
+          "function": "<lambda>",
+          "calls": 785703,
+          "own_seconds": 0.14023654200000002,
+          "cumulative_seconds": 0.281709942,
+          "cumulative_percent": 7.126585111085186
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 884,
+          "function": "python_mpf_mul",
+          "calls": 613784,
+          "own_seconds": 0.134668539,
+          "cumulative_seconds": 0.14260061200000002,
+          "cumulative_percent": 3.607453081335822
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 537,
+          "function": "mpf_eq",
+          "calls": 948528,
+          "own_seconds": 0.13404377,
+          "cumulative_seconds": 0.13404377,
+          "cumulative_percent": 3.3909855248052527
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 208,
+          "function": "_normalize1",
+          "calls": 360391,
+          "own_seconds": 0.12067387800000001,
+          "cumulative_seconds": 0.12291724700000001,
+          "cumulative_percent": 3.1095112091066364
+        }
+      ]
+    },
+    {
+      "case": "boundary_exchangeable_5",
+      "unprofiled_seconds": 5.866233041,
+      "profiled_seconds": 11.575726963999998,
+      "masters": 21,
+      "probability": "0.000002451691596984394242873498",
+      "selected_functions": [
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 70,
+          "function": "centered_interval_moments",
+          "calls": 70,
+          "own_seconds": 0.015534037,
+          "cumulative_seconds": 0.13562353900000002,
+          "cumulative_percent": 1.1716200582631506
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 234,
+          "function": "A_series",
+          "calls": 6,
+          "own_seconds": 0.009933382000000001,
+          "cumulative_seconds": 1.021429543,
+          "cumulative_percent": 8.823891114368895
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 183,
+          "function": "normalized",
+          "calls": 2,
+          "own_seconds": 0.0011676570000000001,
+          "cumulative_seconds": 0.185119,
+          "cumulative_percent": 1.599199778775985
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 82,
+          "function": "__init__",
+          "calls": 1,
+          "own_seconds": 0.00141842,
+          "cumulative_seconds": 1.754806042,
+          "cumulative_percent": 15.15935929948391
+        },
+        {
+          "file": "bootloops/tools/wayfinder/ratfun.py",
+          "line": 121,
+          "function": "__init__",
+          "calls": 162,
+          "own_seconds": 0.000101118,
+          "cumulative_seconds": 0.000907627,
+          "cumulative_percent": 0.00784077754099315
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 411,
+          "function": "_march_leg",
+          "calls": 2,
+          "own_seconds": 0.468941243,
+          "cumulative_seconds": 9.618273958000001,
+          "cumulative_percent": 83.09002093702117
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 300,
+          "function": "_local_a_series",
+          "calls": 6,
+          "own_seconds": 0.0057611120000000005,
+          "cumulative_seconds": 2.096637583,
+          "cumulative_percent": 18.11236209631111
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "<stdin>",
+          "line": 10,
+          "function": "<lambda>",
+          "calls": 1,
+          "own_seconds": 1.542e-06,
+          "cumulative_seconds": 11.578459667,
+          "cumulative_percent": 100.02360718258561
+        },
+        {
+          "file": "gaussian_orthant/__init__.py",
+          "line": 12,
+          "function": "gaussian_probability",
+          "calls": 1,
+          "own_seconds": 5.8542e-05,
+          "cumulative_seconds": 11.578458125000001,
+          "cumulative_percent": 100.02359386160798
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 248,
+          "function": "transport_probability",
+          "calls": 1,
+          "own_seconds": 0.000162628,
+          "cumulative_seconds": 11.578399583000001,
+          "cumulative_percent": 100.02308813095122
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 847,
+          "function": "transport_fixed_eps",
+          "calls": 2,
+          "own_seconds": 0.001011916,
+          "cumulative_seconds": 9.632210084,
+          "cumulative_percent": 83.210411872669
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 411,
+          "function": "_march_leg",
+          "calls": 2,
+          "own_seconds": 0.468941243,
+          "cumulative_seconds": 9.618273958000001,
+          "cumulative_percent": 83.09002093702117
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 440,
+          "function": "__eq__",
+          "calls": 1489451,
+          "own_seconds": 1.160177556,
+          "cumulative_seconds": 4.414745515,
+          "cumulative_percent": 38.13795478011588
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 491,
+          "function": "__mul__",
+          "calls": 689925,
+          "own_seconds": 0.292537516,
+          "cumulative_seconds": 2.338290985,
+          "cumulative_percent": 20.199949361901695
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 449,
+          "function": "__ne__",
+          "calls": 753977,
+          "own_seconds": 0.14166698700000002,
+          "cumulative_seconds": 2.324603046,
+          "cumulative_percent": 20.08170245574566
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 300,
+          "function": "_local_a_series",
+          "calls": 6,
+          "own_seconds": 0.0057611120000000005,
+          "cumulative_seconds": 2.096637583,
+          "cumulative_percent": 18.11236209631111
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 145,
+          "function": "mpc_mul",
+          "calls": 650883,
+          "own_seconds": 0.49602333800000004,
+          "cumulative_seconds": 1.901261738,
+          "cumulative_percent": 16.424555830600017
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 82,
+          "function": "__init__",
+          "calls": 1,
+          "own_seconds": 0.00141842,
+          "cumulative_seconds": 1.754806042,
+          "cumulative_percent": 15.15935929948391
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 2560128,
+          "own_seconds": 0.742555202,
+          "cumulative_seconds": 1.661317095,
+          "cumulative_percent": 14.351730134674249
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/sympy/polys/polytools.py",
+          "line": 7324,
+          "function": "cancel",
+          "calls": 511,
+          "own_seconds": 0.00454547,
+          "cumulative_seconds": 1.5338057630000002,
+          "cumulative_percent": 13.250189536865104
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 432,
+          "function": "mpc_convert_lhs",
+          "calls": 1528985,
+          "own_seconds": 0.266812423,
+          "cumulative_seconds": 1.395707561,
+          "cumulative_percent": 12.057191443272542
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 463,
+          "function": "__add__",
+          "calls": 552501,
+          "own_seconds": 0.204973007,
+          "cumulative_seconds": 1.2988395220000002,
+          "cumulative_percent": 11.220371092367106
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 135,
+          "function": "moments",
+          "calls": 61,
+          "own_seconds": 0.0015951810000000002,
+          "cumulative_seconds": 1.277712042,
+          "cumulative_percent": 11.037855730129333
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 148,
+          "function": "<dictcomp>",
+          "calls": 145,
+          "own_seconds": 0.000648951,
+          "cumulative_seconds": 1.155277789,
+          "cumulative_percent": 9.980174831290192
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 621,
+          "function": "convert",
+          "calls": 1530725,
+          "own_seconds": 0.607941782,
+          "cumulative_seconds": 1.129573881,
+          "cumulative_percent": 9.75812477706951
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 87,
+          "function": "mpc_add",
+          "calls": 552501,
+          "own_seconds": 0.167728273,
+          "cumulative_seconds": 1.027134346,
+          "cumulative_percent": 8.873173574276093
+        },
+        {
+          "file": "gaussian_orthant/transport.py",
+          "line": 234,
+          "function": "A_series",
+          "calls": 6,
+          "own_seconds": 0.009933382000000001,
+          "cumulative_seconds": 1.021429543,
+          "cumulative_percent": 8.823891114368895
+        }
+      ],
+      "top_own": [
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 440,
+          "function": "__eq__",
+          "calls": 1489451,
+          "own_seconds": 1.160177556,
+          "cumulative_seconds": 4.414745515,
+          "cumulative_percent": 38.13795478011588
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 2560128,
+          "own_seconds": 0.742555202,
+          "cumulative_seconds": 1.661317095,
+          "cumulative_percent": 14.351730134674249
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 884,
+          "function": "python_mpf_mul",
+          "calls": 2702159,
+          "own_seconds": 0.644848595,
+          "cumulative_seconds": 0.663495319,
+          "cumulative_percent": 5.731781002294209
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 621,
+          "function": "convert",
+          "calls": 1530725,
+          "own_seconds": 0.607941782,
+          "cumulative_seconds": 1.129573881,
+          "cumulative_percent": 9.75812477706951
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 208,
+          "function": "_normalize1",
+          "calls": 1412200,
+          "own_seconds": 0.5442013050000001,
+          "cumulative_seconds": 0.556724882,
+          "cumulative_percent": 4.809416149252569
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 145,
+          "function": "mpc_mul",
+          "calls": 650883,
+          "own_seconds": 0.49602333800000004,
+          "cumulative_seconds": 1.901261738,
+          "cumulative_percent": 16.424555830600017
+        },
+        {
+          "file": "bootloops/tools/wayfinder/transport.py",
+          "line": 411,
+          "function": "_march_leg",
+          "calls": 2,
+          "own_seconds": 0.468941243,
+          "cumulative_seconds": 9.618273958000001,
+          "cumulative_percent": 83.09002093702117
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__eq__",
+          "calls": 1832042,
+          "own_seconds": 0.46699463300000005,
+          "cumulative_seconds": 0.8445244510000001,
+          "cumulative_percent": 7.295649367218439
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 595,
+          "function": "make_mpf",
+          "calls": 3676224,
+          "own_seconds": 0.461686068,
+          "cumulative_seconds": 0.725890688,
+          "cumulative_percent": 6.270800013316556
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method __new__ of type object at 0x102ea2860>",
+          "calls": 5841258,
+          "own_seconds": 0.41983639100000003,
+          "cumulative_seconds": 0.41983639100000003,
+          "cumulative_percent": 3.6268684662801114
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 378,
+          "function": "<lambda>",
+          "calls": 1665899,
+          "own_seconds": 0.37560254000000004,
+          "cumulative_seconds": 0.690347869,
+          "cumulative_percent": 5.963753906315789
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 537,
+          "function": "mpf_eq",
+          "calls": 1832042,
+          "own_seconds": 0.298456585,
+          "cumulative_seconds": 0.298456585,
+          "cumulative_percent": 2.5782966886501977
+        }
+      ]
+    },
+    {
+      "case": "auxiliary_field_5",
+      "unprofiled_seconds": 7.793834416999999,
+      "profiled_seconds": 8.943364374,
+      "masters": null,
+      "probability": "0.000002451691596984394242873498",
+      "selected_functions": [
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 70,
+          "function": "centered_interval_moments",
+          "calls": 3252,
+          "own_seconds": 0.013928008,
+          "cumulative_seconds": 0.159221424,
+          "cumulative_percent": 1.7803302799882097
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 12,
+          "function": "_erfc_complex",
+          "calls": 6464,
+          "own_seconds": 0.023570418000000003,
+          "cumulative_seconds": 8.117530515,
+          "cumulative_percent": 90.76595982826274
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 39,
+          "function": "erfc",
+          "calls": 6486,
+          "own_seconds": 0.010539826,
+          "cumulative_seconds": 8.180427199,
+          "cumulative_percent": 91.46923749167598
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 173,
+          "function": "integrand",
+          "calls": 3232,
+          "own_seconds": 0.016841334,
+          "cumulative_seconds": 8.908497521000001,
+          "cumulative_percent": 99.61013717498346
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 11,
+          "function": "_exponential_interval",
+          "calls": 3242,
+          "own_seconds": 0.024857562000000003,
+          "cumulative_seconds": 8.632944638,
+          "cumulative_percent": 96.52904966164135
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 37,
+          "function": "_saddle",
+          "calls": 2,
+          "own_seconds": 5.0376e-05,
+          "cumulative_seconds": 0.0029803330000000004,
+          "cumulative_percent": 0.03332451721037303
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 203,
+          "function": "__init__",
+          "calls": 2,
+          "own_seconds": 4.542e-06,
+          "cumulative_seconds": 7.000000000000001e-06,
+          "cumulative_percent": 7.827032095829936e-05
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 7.383800000000001e-05,
+          "cumulative_seconds": 8.938503084,
+          "cumulative_percent": 99.9456436102041
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "<stdin>",
+          "line": 10,
+          "function": "<lambda>",
+          "calls": 1,
+          "own_seconds": 6.333e-06,
+          "cumulative_seconds": 8.943364041,
+          "cumulative_percent": 99.99999627656902
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 107,
+          "function": "exchangeable_precision_probability",
+          "calls": 1,
+          "own_seconds": 0.000108455,
+          "cumulative_seconds": 8.943357708,
+          "cumulative_percent": 99.99992546429151
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 7.383800000000001e-05,
+          "cumulative_seconds": 8.938503084,
+          "cumulative_percent": 99.9456436102041
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 233,
+          "function": "_segment",
+          "calls": 8,
+          "own_seconds": 0.00018357800000000002,
+          "cumulative_seconds": 8.938268874,
+          "cumulative_percent": 99.94302479707957
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 294,
+          "function": "sum_next",
+          "calls": 43,
+          "own_seconds": 0.000243782,
+          "cumulative_seconds": 8.919878293,
+          "cumulative_percent": 99.73739098601105
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 890,
+          "function": "fdot",
+          "calls": 43,
+          "own_seconds": 0.0036148440000000003,
+          "cumulative_seconds": 8.919247541,
+          "cumulative_percent": 99.73033824865605
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 307,
+          "function": "<genexpr>",
+          "calls": 3275,
+          "own_seconds": 0.0016387720000000001,
+          "cumulative_seconds": 8.912412876000001,
+          "cumulative_percent": 99.65391661677143
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 251,
+          "function": "fc",
+          "calls": 3232,
+          "own_seconds": 0.002276583,
+          "cumulative_seconds": 8.910774104,
+          "cumulative_percent": 99.63559272956891
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 173,
+          "function": "integrand",
+          "calls": 3232,
+          "own_seconds": 0.016841334,
+          "cumulative_seconds": 8.908497521000001,
+          "cumulative_percent": 99.61013717498346
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 11,
+          "function": "_exponential_interval",
+          "calls": 3242,
+          "own_seconds": 0.024857562000000003,
+          "cumulative_seconds": 8.632944638,
+          "cumulative_percent": 96.52904966164135
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 39,
+          "function": "erfc",
+          "calls": 6486,
+          "own_seconds": 0.010539826,
+          "cumulative_seconds": 8.180427199,
+          "cumulative_percent": 91.46923749167598
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 1015,
+          "function": "f_wrapped",
+          "calls": 6464,
+          "own_seconds": 0.011874853000000001,
+          "cumulative_seconds": 8.160820535000001,
+          "cumulative_percent": 91.25000607964719
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 12,
+          "function": "_erfc_complex",
+          "calls": 6464,
+          "own_seconds": 0.023570418000000003,
+          "cumulative_seconds": 8.117530515,
+          "cumulative_percent": 90.76595982826274
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/bessel.py",
+          "line": 211,
+          "function": "hyperu",
+          "calls": 6464,
+          "own_seconds": 0.039565122,
+          "cumulative_seconds": 7.644252962,
+          "cumulative_percent": 85.4740189745958
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp.py",
+          "line": 666,
+          "function": "hypsum",
+          "calls": 15444,
+          "own_seconds": 0.048692855,
+          "cumulative_seconds": 5.632645727000001,
+          "cumulative_percent": 62.981284128097634
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/hypergeometric.py",
+          "line": 58,
+          "function": "hypercomb",
+          "calls": 8702,
+          "own_seconds": 0.08943258400000001,
+          "cumulative_seconds": 4.321655436,
+          "cumulative_percent": 48.3224797209856
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_2_0_QZ__C",
+          "calls": 6464,
+          "own_seconds": 3.120751556,
+          "cumulative_seconds": 3.1210635360000003,
+          "cumulative_percent": 34.89809209913782
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/hypergeometric.py",
+          "line": 194,
+          "function": "hyper",
+          "calls": 15722,
+          "own_seconds": 0.038027394,
+          "cumulative_seconds": 2.9850299270000002,
+          "cumulative_percent": 33.377035779488416
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/hypergeometric.py",
+          "line": 309,
+          "function": "_hyp1f1",
+          "calls": 6742,
+          "own_seconds": 0.020771259,
+          "cumulative_seconds": 2.706003759,
+          "cumulative_percent": 30.257111818756364
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_1_1_Z_Q_C",
+          "calls": 6742,
+          "own_seconds": 1.61194919,
+          "cumulative_seconds": 1.6344352350000002,
+          "cumulative_percent": 18.275395775571923
+        }
+      ],
+      "top_own": [
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_2_0_QZ__C",
+          "calls": 6464,
+          "own_seconds": 3.120751556,
+          "cumulative_seconds": 3.1210635360000003,
+          "cumulative_percent": 34.89809209913782
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_1_1_Z_Q_C",
+          "calls": 6742,
+          "own_seconds": 1.61194919,
+          "cumulative_seconds": 1.6344352350000002,
+          "cumulative_percent": 18.275395775571923
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_2_0_ZQ__C",
+          "calls": 2238,
+          "own_seconds": 0.7930396620000001,
+          "cumulative_seconds": 0.793143394,
+          "cumulative_percent": 8.868512573476412
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 884,
+          "function": "python_mpf_mul",
+          "calls": 415836,
+          "own_seconds": 0.18274409800000002,
+          "cumulative_seconds": 0.251649708,
+          "cumulative_percent": 2.8138147734603307
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 208,
+          "function": "_normalize1",
+          "calls": 623347,
+          "own_seconds": 0.180687386,
+          "cumulative_seconds": 0.18089443700000002,
+          "cumulative_percent": 2.022666520508695
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 1122,
+          "function": "cos_sin_basecase",
+          "calls": 21908,
+          "own_seconds": 0.171659675,
+          "cumulative_seconds": 0.176486144,
+          "cumulative_percent": 1.9733753050818057
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 1086,
+          "function": "exp_basecase",
+          "calls": 21899,
+          "own_seconds": 0.128954911,
+          "cumulative_seconds": 0.128954911,
+          "cumulative_percent": 1.44190603901699
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 153,
+          "function": "_normalize",
+          "calls": 225313,
+          "own_seconds": 0.11122264500000001,
+          "cumulative_seconds": 0.11160244100000001,
+          "cumulative_percent": 1.2478798395428097
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libintmath.py",
+          "line": 91,
+          "function": "python_bitcount",
+          "calls": 527870,
+          "own_seconds": 0.105796897,
+          "cumulative_seconds": 0.21046023500000002,
+          "cumulative_percent": 2.353255734629873
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 621,
+          "function": "convert",
+          "calls": 271666,
+          "own_seconds": 0.10193645100000001,
+          "cumulative_seconds": 0.22606229400000002,
+          "cumulative_percent": 2.5277097582784904
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/hypergeometric.py",
+          "line": 58,
+          "function": "hypercomb",
+          "calls": 8702,
+          "own_seconds": 0.08943258400000001,
+          "cumulative_seconds": 4.321655436,
+          "cumulative_percent": 48.3224797209856
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 135130,
+          "own_seconds": 0.086282326,
+          "cumulative_seconds": 0.21051823,
+          "cumulative_percent": 2.3539042042390124
+        }
+      ]
+    },
+    {
+      "case": "auxiliary_field_50",
+      "unprofiled_seconds": 2.204218417,
+      "profiled_seconds": 2.7992303750000023,
+      "masters": null,
+      "probability": "2.137302826361027523140585e-153",
+      "selected_functions": [
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 70,
+          "function": "centered_interval_moments",
+          "calls": 3256,
+          "own_seconds": 0.013467368,
+          "cumulative_seconds": 0.152412137,
+          "cumulative_percent": 5.444787194408745
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 12,
+          "function": "_erfc_complex",
+          "calls": 6464,
+          "own_seconds": 0.02194919,
+          "cumulative_seconds": 1.6710767780000002,
+          "cumulative_percent": 59.69772237842334
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 39,
+          "function": "erfc",
+          "calls": 6490,
+          "own_seconds": 0.009752488,
+          "cumulative_seconds": 1.7338218680000002,
+          "cumulative_percent": 61.93923456550083
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 173,
+          "function": "integrand",
+          "calls": 3232,
+          "own_seconds": 0.01601796,
+          "cumulative_seconds": 2.776634768,
+          "cumulative_percent": 99.19279216166686
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 11,
+          "function": "_exponential_interval",
+          "calls": 3244,
+          "own_seconds": 0.024096649,
+          "cumulative_seconds": 2.1800123940000002,
+          "cumulative_percent": 77.87899179252076
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 37,
+          "function": "_saddle",
+          "calls": 2,
+          "own_seconds": 5.9589e-05,
+          "cumulative_seconds": 0.003779417,
+          "cumulative_percent": 0.13501628996863102
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 203,
+          "function": "__init__",
+          "calls": 2,
+          "own_seconds": 4.625000000000001e-06,
+          "cumulative_seconds": 7.458e-06,
+          "cumulative_percent": 0.0002664303755277732
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 8.217100000000001e-05,
+          "cumulative_seconds": 2.7935747920000003,
+          "cumulative_percent": 99.79795935873975
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "<stdin>",
+          "line": 10,
+          "function": "<lambda>",
+          "calls": 1,
+          "own_seconds": 5.042e-06,
+          "cumulative_seconds": 2.7992300830000003,
+          "cumulative_percent": 99.99998956856125
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 107,
+          "function": "exchangeable_precision_probability",
+          "calls": 1,
+          "own_seconds": 0.000104616,
+          "cumulative_seconds": 2.799225041,
+          "cumulative_percent": 99.99980944762355
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 8.217100000000001e-05,
+          "cumulative_seconds": 2.7935747920000003,
+          "cumulative_percent": 99.79795935873975
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 233,
+          "function": "_segment",
+          "calls": 8,
+          "own_seconds": 0.000190711,
+          "cumulative_seconds": 2.793328625,
+          "cumulative_percent": 99.78916526296975
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 294,
+          "function": "sum_next",
+          "calls": 43,
+          "own_seconds": 0.000313291,
+          "cumulative_seconds": 2.7881929170000004,
+          "cumulative_percent": 99.60569669082696
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 890,
+          "function": "fdot",
+          "calls": 43,
+          "own_seconds": 0.0035108,
+          "cumulative_seconds": 2.7874465020000003,
+          "cumulative_percent": 99.57903168294958
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 307,
+          "function": "<genexpr>",
+          "calls": 3275,
+          "own_seconds": 0.001671446,
+          "cumulative_seconds": 2.780388502,
+          "cumulative_percent": 99.32689094944527
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 251,
+          "function": "fc",
+          "calls": 3232,
+          "own_seconds": 0.0020822880000000003,
+          "cumulative_seconds": 2.778717056,
+          "cumulative_percent": 99.26718003694133
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 173,
+          "function": "integrand",
+          "calls": 3232,
+          "own_seconds": 0.01601796,
+          "cumulative_seconds": 2.776634768,
+          "cumulative_percent": 99.19279216166686
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 11,
+          "function": "_exponential_interval",
+          "calls": 3244,
+          "own_seconds": 0.024096649,
+          "cumulative_seconds": 2.1800123940000002,
+          "cumulative_percent": 77.87899179252076
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 39,
+          "function": "erfc",
+          "calls": 6490,
+          "own_seconds": 0.009752488,
+          "cumulative_seconds": 1.7338218680000002,
+          "cumulative_percent": 61.93923456550083
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 1015,
+          "function": "f_wrapped",
+          "calls": 6464,
+          "own_seconds": 0.011807119000000001,
+          "cumulative_seconds": 1.7146448170000002,
+          "cumulative_percent": 61.254151580860814
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 12,
+          "function": "_erfc_complex",
+          "calls": 6464,
+          "own_seconds": 0.02194919,
+          "cumulative_seconds": 1.6710767780000002,
+          "cumulative_percent": 59.69772237842334
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/bessel.py",
+          "line": 211,
+          "function": "hyperu",
+          "calls": 6464,
+          "own_seconds": 0.026566445,
+          "cumulative_seconds": 1.225399245,
+          "cumulative_percent": 43.77629136722979
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp.py",
+          "line": 666,
+          "function": "hypsum",
+          "calls": 6464,
+          "own_seconds": 0.02210648,
+          "cumulative_seconds": 0.7725375520000001,
+          "cumulative_percent": 27.59821266943774
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_2_0_QZ__C",
+          "calls": 6464,
+          "own_seconds": 0.7140348910000001,
+          "cumulative_seconds": 0.733904022,
+          "cumulative_percent": 26.218064384929356
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 524,
+          "function": "__pow__",
+          "calls": 9696,
+          "own_seconds": 0.008898000000000001,
+          "cumulative_seconds": 0.58444626,
+          "cumulative_percent": 20.878819593403403
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 987,
+          "function": "f",
+          "calls": 29201,
+          "own_seconds": 0.022566542000000002,
+          "cumulative_seconds": 0.40215247600000004,
+          "cumulative_percent": 14.366537302239719
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 255,
+          "function": "mpc_pow_int",
+          "calls": 9696,
+          "own_seconds": 0.008175380000000001,
+          "cumulative_seconds": 0.381842371,
+          "cumulative_percent": 13.640976977466519
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 417,
+          "function": "mpc_exp",
+          "calls": 14816,
+          "own_seconds": 0.012406902000000001,
+          "cumulative_seconds": 0.32093153100000005,
+          "cumulative_percent": 11.464991730092947
+        }
+      ],
+      "top_own": [
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "hypsum_2_0_QZ__C",
+          "calls": 6464,
+          "own_seconds": 0.7140348910000001,
+          "cumulative_seconds": 0.733904022,
+          "cumulative_percent": 26.218064384929356
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpc.py",
+          "line": 228,
+          "function": "complex_int_pow",
+          "calls": 1344,
+          "own_seconds": 0.247989005,
+          "cumulative_seconds": 0.247989005,
+          "cumulative_percent": 8.8591852680221
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 1122,
+          "function": "cos_sin_basecase",
+          "calls": 14816,
+          "own_seconds": 0.11771187400000001,
+          "cumulative_seconds": 0.119018829,
+          "cumulative_percent": 4.251841151159268
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 884,
+          "function": "python_mpf_mul",
+          "calls": 267702,
+          "own_seconds": 0.11236609,
+          "cumulative_seconds": 0.13511209500000002,
+          "cumulative_percent": 4.826758676480849
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 208,
+          "function": "_normalize1",
+          "calls": 337986,
+          "own_seconds": 0.10744704000000001,
+          "cumulative_seconds": 0.107483044,
+          "cumulative_percent": 3.83973555588471
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 1086,
+          "function": "exp_basecase",
+          "calls": 14837,
+          "own_seconds": 0.08034978200000001,
+          "cumulative_seconds": 0.08034978200000001,
+          "cumulative_percent": 2.8704240536115195
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 153,
+          "function": "_normalize",
+          "calls": 159809,
+          "own_seconds": 0.07919398700000001,
+          "cumulative_seconds": 0.079538486,
+          "cumulative_percent": 2.841441230073818
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 131602,
+          "own_seconds": 0.076686744,
+          "cumulative_seconds": 0.19183945900000002,
+          "cumulative_percent": 6.853292987719879
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libintmath.py",
+          "line": 91,
+          "function": "python_bitcount",
+          "calls": 322676,
+          "own_seconds": 0.067099852,
+          "cumulative_seconds": 0.133676491,
+          "cumulative_percent": 4.7754730083621615
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libintmath.py",
+          "line": 205,
+          "function": "isqrt_small_python",
+          "calls": 32339,
+          "own_seconds": 0.063418071,
+          "cumulative_seconds": 0.063418071,
+          "cumulative_percent": 2.265553831023999
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 950,
+          "function": "mpf_div",
+          "calls": 108987,
+          "own_seconds": 0.056815007,
+          "cumulative_seconds": 0.13449659,
+          "cumulative_percent": 4.804770311196694
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method _bisect.bisect_right>",
+          "calls": 322676,
+          "own_seconds": 0.050202766,
+          "cumulative_seconds": 0.050202766,
+          "cumulative_percent": 1.7934488868212557
+        }
+      ]
+    },
+    {
+      "case": "common_factor_10000",
+      "unprofiled_seconds": 1.4505258749999967,
+      "profiled_seconds": 1.7737558330000012,
+      "masters": null,
+      "probability": "0.0000999900009999000099990001",
+      "selected_functions": [
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 70,
+          "function": "centered_interval_moments",
+          "calls": 14528,
+          "own_seconds": 0.005369003000000001,
+          "cumulative_seconds": 0.023281307,
+          "cumulative_percent": 1.3125429423182613
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 39,
+          "function": "erfc",
+          "calls": 136,
+          "own_seconds": 7.9554e-05,
+          "cumulative_seconds": 0.002772824,
+          "cumulative_percent": 0.15632501094078138
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 69,
+          "function": "_factor_peak",
+          "calls": 2,
+          "own_seconds": 8.7717e-05,
+          "cumulative_seconds": 0.005037792,
+          "cumulative_percent": 0.2840183471858946
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 257,
+          "function": "integrand",
+          "calls": 14464,
+          "own_seconds": 0.051615571000000006,
+          "cumulative_seconds": 1.6321636080000002,
+          "cumulative_percent": 92.0173779070526
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 203,
+          "function": "__init__",
+          "calls": 2,
+          "own_seconds": 5.042e-06,
+          "cumulative_seconds": 8.417000000000001e-06,
+          "cumulative_percent": 0.0004745297996153226
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 0.00011154900000000001,
+          "cumulative_seconds": 0.933398625,
+          "cumulative_percent": 52.62272335540782
+        }
+      ],
+      "top_cumulative": [
+        {
+          "file": "<stdin>",
+          "line": 10,
+          "function": "<lambda>",
+          "calls": 1,
+          "own_seconds": 2.9041000000000002e-05,
+          "cumulative_seconds": 1.773755583,
+          "cumulative_percent": 99.99998590561358
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 210,
+          "function": "equicorrelated_probability",
+          "calls": 1,
+          "own_seconds": 0.000100666,
+          "cumulative_seconds": 1.7737265420000001,
+          "cumulative_percent": 99.99834864531769
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 294,
+          "function": "sum_next",
+          "calls": 165,
+          "own_seconds": 0.0007152930000000001,
+          "cumulative_seconds": 1.666300549,
+          "cumulative_percent": 93.9419348480304
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 890,
+          "function": "fdot",
+          "calls": 165,
+          "own_seconds": 0.010658793000000001,
+          "cumulative_seconds": 1.664161247,
+          "cumulative_percent": 93.82132625240529
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 307,
+          "function": "<genexpr>",
+          "calls": 14629,
+          "own_seconds": 0.004593426,
+          "cumulative_seconds": 1.6394409680000002,
+          "cumulative_percent": 92.42765760083051
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 257,
+          "function": "integrand",
+          "calls": 14464,
+          "own_seconds": 0.051615571000000006,
+          "cumulative_seconds": 1.6321636080000002,
+          "cumulative_percent": 92.0173779070526
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 987,
+          "function": "f",
+          "calls": 101678,
+          "own_seconds": 0.058171770000000005,
+          "cumulative_seconds": 1.0154830190000002,
+          "cumulative_percent": 57.25044000461361
+        },
+        {
+          "file": "gaussian_orthant/common.py",
+          "line": 101,
+          "function": "normal_interval",
+          "calls": 14496,
+          "own_seconds": 0.030583452,
+          "cumulative_seconds": 0.9497136460000001,
+          "cumulative_percent": 53.542524192505326
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 278,
+          "function": "quad_refine",
+          "calls": 2,
+          "own_seconds": 0.00011154900000000001,
+          "cumulative_seconds": 0.933398625,
+          "cumulative_percent": 52.62272335540782
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 233,
+          "function": "_segment",
+          "calls": 16,
+          "own_seconds": 0.00022297900000000002,
+          "cumulative_seconds": 0.933065291,
+          "cumulative_percent": 52.6039308026901
+        },
+        {
+          "file": "bootloops/tools/wayfinder/quad.py",
+          "line": 251,
+          "function": "fc",
+          "calls": 7698,
+          "own_seconds": 0.0026839340000000002,
+          "cumulative_seconds": 0.8648063170000001,
+          "cumulative_percent": 48.75565739718131
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 464,
+          "function": "quad",
+          "calls": 2,
+          "own_seconds": 1.4957000000000001e-05,
+          "cumulative_seconds": 0.8343250000000001,
+          "cumulative_percent": 47.0371955642217
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/calculus/quadrature.py",
+          "line": 203,
+          "function": "summation",
+          "calls": 2,
+          "own_seconds": 0.000184632,
+          "cumulative_seconds": 0.8342261670000001,
+          "cumulative_percent": 47.031623602277364
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/expintegrals.py",
+          "line": 24,
+          "function": "erf",
+          "calls": 28856,
+          "own_seconds": 0.015113849,
+          "cumulative_seconds": 0.5809296780000001,
+          "cumulative_percent": 32.751389294515135
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libhyper.py",
+          "line": 335,
+          "function": "mpf_erf",
+          "calls": 28868,
+          "own_seconds": 0.49147004600000005,
+          "cumulative_seconds": 0.534064329,
+          "cumulative_percent": 30.10923595367253
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/functions/functions.py",
+          "line": 304,
+          "function": "log",
+          "calls": 29036,
+          "own_seconds": 0.007039425,
+          "cumulative_seconds": 0.18986894,
+          "cumulative_percent": 10.70434478452818
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 668,
+          "function": "mpf_log",
+          "calls": 29136,
+          "own_seconds": 0.027113460000000002,
+          "cumulative_seconds": 0.15907352600000002,
+          "cumulative_percent": 8.968174933691673
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__mul__",
+          "calls": 102021,
+          "own_seconds": 0.038560894000000005,
+          "cumulative_seconds": 0.14109464700000002,
+          "cumulative_percent": 7.954569866663262
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__div__",
+          "calls": 87590,
+          "own_seconds": 0.038839611,
+          "cumulative_seconds": 0.133729329,
+          "cumulative_percent": 7.539331316747242
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 136104,
+          "own_seconds": 0.066734755,
+          "cumulative_seconds": 0.130450058,
+          "cumulative_percent": 7.354454067072259
+        }
+      ],
+      "top_own": [
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libhyper.py",
+          "line": 335,
+          "function": "mpf_erf",
+          "calls": 28868,
+          "own_seconds": 0.49147004600000005,
+          "cumulative_seconds": 0.534064329,
+          "cumulative_percent": 30.10923595367253
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 634,
+          "function": "log_taylor_cached",
+          "calls": 27311,
+          "own_seconds": 0.09128675900000001,
+          "cumulative_seconds": 0.09128675900000001,
+          "cumulative_percent": 5.1465233997626525
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 208,
+          "function": "_normalize1",
+          "calls": 290967,
+          "own_seconds": 0.08405683600000001,
+          "cumulative_seconds": 0.08405683600000001,
+          "cumulative_percent": 4.738918087605802
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 702,
+          "function": "mpf_add",
+          "calls": 136104,
+          "own_seconds": 0.066734755,
+          "cumulative_seconds": 0.130450058,
+          "cumulative_percent": 7.354454067072259
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libelefun.py",
+          "line": 1086,
+          "function": "exp_basecase",
+          "calls": 14550,
+          "own_seconds": 0.06658098400000001,
+          "cumulative_seconds": 0.066675234,
+          "cumulative_percent": 3.758986031760097
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/ctx_mp_python.py",
+          "line": 987,
+          "function": "f",
+          "calls": 101678,
+          "own_seconds": 0.058171770000000005,
+          "cumulative_seconds": 1.0154830190000002,
+          "cumulative_percent": 57.25044000461361
+        },
+        {
+          "file": "gaussian_orthant/structured.py",
+          "line": 257,
+          "function": "integrand",
+          "calls": 14464,
+          "own_seconds": 0.051615571000000006,
+          "cumulative_seconds": 1.6321636080000002,
+          "cumulative_percent": 92.0173779070526
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 884,
+          "function": "python_mpf_mul",
+          "calls": 101843,
+          "own_seconds": 0.046244649000000006,
+          "cumulative_seconds": 0.080247856,
+          "cumulative_percent": 4.524177144735566
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libintmath.py",
+          "line": 205,
+          "function": "isqrt_small_python",
+          "calls": 29052,
+          "own_seconds": 0.044395729,
+          "cumulative_seconds": 0.044395729,
+          "cumulative_percent": 2.5029222271766858
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 950,
+          "function": "mpf_div",
+          "calls": 87887,
+          "own_seconds": 0.043973631000000006,
+          "cumulative_seconds": 0.08168726000000001,
+          "cumulative_percent": 4.60532720909169
+        },
+        {
+          "file": "/Users/lhd/.pyenv/versions/3.9.13/lib/python3.9/site-packages/mpmath/libmp/libmpf.py",
+          "line": 153,
+          "function": "_normalize",
+          "calls": 102788,
+          "own_seconds": 0.043019416000000005,
+          "cumulative_seconds": 0.043029538000000006,
+          "cumulative_percent": 2.425899732051789
+        },
+        {
+          "file": "<string>",
+          "line": 2,
+          "function": "__div__",
+          "calls": 87590,
+          "own_seconds": 0.038839611,
+          "cumulative_seconds": 0.133729329,
+          "cumulative_percent": 7.539331316747242
+        }
+      ]
+    }
+  ]
+}

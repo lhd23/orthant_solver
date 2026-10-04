@@ -1,0 +1,1102 @@
+{
+  "source": "https://arxiv.org/html/1603.04166",
+  "requested_digits": 25,
+  "python": "3.9.13",
+  "platform": "macOS-15.7.4-arm64-arm-64bit",
+  "source_sha256": {
+    "gaussian_orthant/transport.py": "cbea60e7a047620c1c4f160caba8c211a7e48586a83c5d95ff726103e268bd90",
+    "gaussian_orthant/__init__.py": "e4ea8ca81f03b8e5a0c8cde97dc45a9edffd7d9b6e32c88ba207c231acd0c3da",
+    "gaussian_orthant/common.py": "ef1be210827a7915e03d940c0ef3df545cf34d20b16e534d9397a564d3826e73",
+    "gaussian_orthant/structured.py": "5d4e2c5570159f12ed2b1e11a903c327490333c3f7517ef8cf8d8c6b2d6b89fe",
+    "gaussian_orthant/_bootloops.py": "c0f408a5e86ec33ba879be09dd1d97b280ccc8d049b6ff1dfa3f71c10c876d34",
+    "gaussian_orthant/__main__.py": "8cf493827e65774791212eeef2034df78bfc1f5bd423ed77a69877b0d973a37d",
+    "validate.py": "66db38d569be17b96ca25aad55e11a670a84712b26a247953c6cf31ca55ae895",
+    "validation_oracles.py": "b87a0c47fd1cedf895b4f6fe4e5d828671193ad67f9bc94a2c8c47cd6127669f",
+    "BootLoops.pdf": "8d19594286088a3000913d5a6e06085f24ade6affc2052a996081bc634947b10",
+    "bootloops/tools/wayfinder/transport.py": "0a82c6f8983131b565a33cd18af29efe63cb13639b6a689c9407c7d5bec4a53d",
+    "bootloops/tools/wayfinder/quad.py": "df998e86097327cdd5d72e52322c7dad686581b214efb58e271c599b57afe3d6",
+    "bootloops/tools/wayfinder/ratfun.py": "adbc62a10dbabf1e3be74fda985ae4a361262b1b3b3976f439a90fac3931a534"
+  },
+  "all_independent_checks_passed": true,
+  "published_table_discrepancies": [
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 10,
+      "printed_probability": "8.556e-15",
+      "printed_relative_standard_error_percent": "0.01",
+      "relative_difference_percent": "0.07584943155",
+      "difference_in_stated_standard_errors": "7.584943155",
+      "within_five_standard_errors_plus_printed_unit": false,
+      "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+    }
+  ],
+  "records": [
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 2,
+      "candidate": {
+        "probability": "0.01489631388606450747510203",
+        "log_probability": "-4.206641486833739159352761",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 2,
+          "saddle": "0.727246128519",
+          "relative_precision_agreement": "1.6268019e-32",
+          "relative_log_precision_agreement": "3.8672227e-33",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "1.6759639e-38",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9200429e-41",
+              "quadrature_agreement_estimate": "2.292224e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "1.6759639e-38",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9200429e-41",
+              "quadrature_agreement_estimate": "3.2349395e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": {
+        "relative_difference": "0.0",
+        "passed": true,
+        "transport": {
+          "probability": "0.01489631388606450747510203",
+          "log_probability": "-4.206641486833739159352761",
+          "digits": 25,
+          "method": "boundary masters / BootLoops Wayfinder",
+          "diagnostics": {
+            "masters": 6,
+            "exchangeable_faces_merged": true,
+            "connection_nonzero_entries": 15,
+            "relative_precision_agreement": "7.1450725e-42",
+            "relative_log_precision_agreement": "1.6985219e-42",
+            "runs": [
+              {
+                "transport_digits": 40,
+                "steps": 1,
+                "trunc_worst": "2.02873e-49",
+                "trunc_worst_log10": -48.69277519859358,
+                "min_hfrac": 0.5
+              },
+              {
+                "transport_digits": 60,
+                "steps": 1,
+                "trunc_worst": "2.42817e-70",
+                "trunc_worst_log10": -69.61472010976094,
+                "min_hfrac": 0.5
+              }
+            ],
+            "error_status": "precision agreement and local series estimates; not an interval certificate"
+          }
+        }
+      },
+      "positive_convolution": {
+        "probability": 0.014896313886064492,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 0.014896834568199095
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 0.014896313903317741
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 0.014896313886064367
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 0.014896313886064504
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 0.014896313886064506
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 0.014896313886064503
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 0.014896313886064492
+          }
+        ],
+        "relative_difference": 1.1102230246251565e-15,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 2.6043611711656922e-12,
+        "tolerance": 1e-10,
+        "passed": true,
+        "probability": 0.014896313886103303,
+        "log_probability": -4.206641486831135,
+        "relative_standard_error": 7.137369555918902e-13,
+        "saddle_residual": 1.7763568394002505e-15,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "0.01489",
+        "printed_relative_standard_error_percent": "4e-5",
+        "relative_difference_percent": "0.04240353301",
+        "difference_in_stated_standard_errors": "1060.088325",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 5.536068542000001,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 3,
+      "candidate": {
+        "probability": "0.001077321645861562743078148",
+        "log_probability": "-6.833277275569832449746348",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 3,
+          "saddle": "1.08010855807",
+          "relative_precision_agreement": "6.0856443e-32",
+          "relative_log_precision_agreement": "8.905894e-33",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "0.0",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9195337e-41",
+              "quadrature_agreement_estimate": "2.2947062e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "4.0750556e-71",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9195337e-41",
+              "quadrature_agreement_estimate": "3.2299249e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": {
+        "relative_difference": "0.0",
+        "passed": true,
+        "transport": {
+          "probability": "0.001077321645861562743078148",
+          "log_probability": "-6.833277275569832449746348",
+          "digits": 25,
+          "method": "boundary masters / BootLoops Wayfinder",
+          "diagnostics": {
+            "masters": 10,
+            "exchangeable_faces_merged": true,
+            "connection_nonzero_entries": 31,
+            "relative_precision_agreement": "8.2055733e-44",
+            "relative_log_precision_agreement": "1.2008255e-44",
+            "runs": [
+              {
+                "transport_digits": 40,
+                "steps": 2,
+                "trunc_worst": "3.55233e-50",
+                "trunc_worst_log10": -49.44948676741395,
+                "min_hfrac": 0.5
+              },
+              {
+                "transport_digits": 60,
+                "steps": 2,
+                "trunc_worst": "1.27917e-69",
+                "trunc_worst_log10": -68.8930731501911,
+                "min_hfrac": 0.5
+              }
+            ],
+            "error_status": "precision agreement and local series estimates; not an interval certificate"
+          }
+        }
+      },
+      "positive_convolution": {
+        "probability": 0.0010773216458615639,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 0.0010776116521020406
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 0.0010773216527240395
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 0.0010773216458615513
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 0.0010773216458615635
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 0.0010773216458615637
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 0.0010773216458615628
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 0.0010773216458615639
+          }
+        ],
+        "relative_difference": 9.992007221626409e-16,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 2.3543039961992918e-08,
+        "tolerance": 8.659613530981531e-08,
+        "passed": true,
+        "probability": 0.0010773216204981368,
+        "log_probability": -6.833277299112872,
+        "relative_standard_error": 1.4432689218302552e-08,
+        "saddle_residual": 2.4424906541753444e-15,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "0.001077",
+        "printed_relative_standard_error_percent": "3e-4",
+        "relative_difference_percent": "0.0298649825",
+        "difference_in_stated_standard_errors": "99.54994168",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 6.144478959,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 5,
+      "candidate": {
+        "probability": "0.000002451691596984394242873498",
+        "log_probability": "-12.91873232390829348022267",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 5,
+          "saddle": "1.76600249977",
+          "relative_precision_agreement": "8.394868e-33",
+          "relative_log_precision_agreement": "6.4982134e-34",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "2.0045735e-50",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9185157e-41",
+              "quadrature_agreement_estimate": "2.2971036e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "1.6220016e-59",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9185157e-41",
+              "quadrature_agreement_estimate": "3.2236349e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": {
+        "relative_difference": "0.0",
+        "passed": true,
+        "transport": {
+          "probability": "0.000002451691596984394242873498",
+          "log_probability": "-12.91873232390829348022267",
+          "digits": 25,
+          "method": "boundary masters / BootLoops Wayfinder",
+          "diagnostics": {
+            "masters": 21,
+            "exchangeable_faces_merged": true,
+            "connection_nonzero_entries": 81,
+            "relative_precision_agreement": "2.4737159e-43",
+            "relative_log_precision_agreement": "1.9148286e-44",
+            "runs": [
+              {
+                "transport_digits": 40,
+                "steps": 3,
+                "trunc_worst": "4.32767e-49",
+                "trunc_worst_log10": -48.36374574681297,
+                "min_hfrac": 0.5
+              },
+              {
+                "transport_digits": 60,
+                "steps": 3,
+                "trunc_worst": "9.03589e-69",
+                "trunc_worst_log10": -68.04402895671282,
+                "min_hfrac": 0.5
+              }
+            ],
+            "error_status": "precision agreement and local series estimates; not an interval certificate"
+          }
+        }
+      },
+      "positive_convolution": {
+        "probability": 2.45169159698439e-06,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 2.4552097311857468e-06
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 2.4516914026758223e-06
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 2.451691596982952e-06
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 2.451691596984395e-06
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 2.4516915969843986e-06
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 2.4516915969843922e-06
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 2.45169159698439e-06
+          }
+        ],
+        "relative_difference": 1.7763568394002505e-15,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 2.748217462489322e-07,
+        "tolerance": 1.1414242315711428e-06,
+        "passed": true,
+        "probability": 2.4516922707627454e-06,
+        "log_probability": -12.91873204908651,
+        "relative_standard_error": 1.902373719285238e-07,
+        "saddle_residual": 3.9968028886505635e-15,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "2.451e-6",
+        "printed_relative_standard_error_percent": "0.002",
+        "relative_difference_percent": "0.02821693123",
+        "difference_in_stated_standard_errors": "14.10846561",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 13.787048665999999,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 10,
+      "candidate": {
+        "probability": "8.56248967736346261889415e-15",
+        "log_probability": "-32.39138539688645950174326",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 10,
+          "saddle": "3.38133159062",
+          "relative_precision_agreement": "3.6427999e-32",
+          "relative_log_precision_agreement": "1.12462e-33",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "3.1156615e-44",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9159729e-41",
+              "quadrature_agreement_estimate": "2.2847299e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "3.1156608e-44",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9159729e-41",
+              "quadrature_agreement_estimate": "3.2308035e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": null,
+      "positive_convolution": {
+        "probability": 8.562489677363455e-15,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 8.65254886431673e-15
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 8.562402653978883e-15
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 8.562489686989836e-15
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 8.562489677363351e-15
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 8.562489677363472e-15
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 8.562489677363438e-15
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 8.562489677363455e-15
+          }
+        ],
+        "relative_difference": 8.881784197001252e-16,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 3.1248438900899345e-06,
+        "tolerance": 1.6543645365683078e-05,
+        "passed": true,
+        "probability": 8.56246292100352e-15,
+        "log_probability": -32.39138852172547,
+        "relative_standard_error": 2.7572742276138465e-06,
+        "saddle_residual": 1.7763568394002505e-14,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "8.556e-15",
+        "printed_relative_standard_error_percent": "0.01",
+        "relative_difference_percent": "0.07584943155",
+        "difference_in_stated_standard_errors": "7.584943155",
+        "within_five_standard_errors_plus_printed_unit": false,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 10.209151000000002,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 20,
+      "candidate": {
+        "probability": "1.779997766416905936339532e-38",
+        "log_probability": "-86.9216214242924924598352",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 20,
+          "saddle": "6.31559731874",
+          "relative_precision_agreement": "4.145178e-32",
+          "relative_log_precision_agreement": "4.7688687e-34",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "-3.1404985e-49",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9108972e-41",
+              "quadrature_agreement_estimate": "2.2109402e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "4.8550864e-65",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.9108972e-41",
+              "quadrature_agreement_estimate": "3.2962034e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": null,
+      "positive_convolution": {
+        "probability": 1.7799977664169052e-38,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 1.908529824274031e-38
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 1.7790025257871414e-38
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 1.7799989033681395e-38
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 1.7799977662034468e-38
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 1.7799977664169114e-38
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 1.7799977664168987e-38
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 1.7799977664169052e-38
+          }
+        ],
+        "relative_difference": 4.440892098500626e-16,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 1.6525685777479815e-05,
+        "tolerance": 0.00010782803239783622,
+        "passed": true,
+        "probability": 1.7800271825868008e-38,
+        "log_probability": -86.92160489847016,
+        "relative_standard_error": 1.7971338732972703e-05,
+        "saddle_residual": 1.298516849601583e-12,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "1.7796e-38",
+        "printed_relative_standard_error_percent": "0.03",
+        "relative_difference_percent": "0.02235145071",
+        "difference_in_stated_standard_errors": "0.7450483571",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 19.354883583000003,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example I",
+      "dimension": 50,
+      "candidate": {
+        "probability": "2.137302826361027523140585e-153",
+        "log_probability": "-351.5359745554923380674717",
+        "digits": 25,
+        "method": "one auxiliary field / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 50,
+          "saddle": "14.2121421768",
+          "relative_precision_agreement": "4.366342e-32",
+          "relative_log_precision_agreement": "1.2420754e-34",
+          "runs": [
+            {
+              "work_digits": 51,
+              "centering_residual": "-2.9266774e-48",
+              "quadrature_depths": [
+                5,
+                5,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.8957481e-41",
+              "quadrature_agreement_estimate": "2.1936379e-37"
+            },
+            {
+              "work_digits": 71,
+              "centering_residual": "1.7521842e-50",
+              "quadrature_depths": [
+                5,
+                6,
+                6,
+                5
+              ],
+              "relative_analytic_tail_bound": "5.8957481e-41",
+              "quadrature_agreement_estimate": "3.3263612e-48"
+            }
+          ],
+          "error_status": "analytic Fourier tail bound; empirical quadrature and precision agreement"
+        }
+      },
+      "boundary_crosscheck": null,
+      "positive_convolution": {
+        "probability": 2.1373028263610163e-153,
+        "refinements": [
+          {
+            "intervals_per_coordinate": 16,
+            "probability": 4.941180140165296e-153
+          },
+          {
+            "intervals_per_coordinate": 32,
+            "probability": 1.8753122466882605e-153
+          },
+          {
+            "intervals_per_coordinate": 64,
+            "probability": 2.1412661853906546e-153
+          },
+          {
+            "intervals_per_coordinate": 128,
+            "probability": 2.1372917331485902e-153
+          },
+          {
+            "intervals_per_coordinate": 256,
+            "probability": 2.137302832431366e-153
+          },
+          {
+            "intervals_per_coordinate": 512,
+            "probability": 2.137302826360356e-153
+          },
+          {
+            "intervals_per_coordinate": 1024,
+            "probability": 2.1373028263610163e-153
+          }
+        ],
+        "relative_difference": 5.10702591327572e-15,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 2.0787595833682282e-05,
+        "tolerance": 0.0003149765876306035,
+        "passed": true,
+        "probability": 2.1373472566719554e-153,
+        "log_probability": -351.53595376768044,
+        "relative_standard_error": 5.249609793843391e-05,
+        "saddle_residual": 1.2825296380469808e-12,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "2.1364e-153",
+        "printed_relative_standard_error_percent": "0.06",
+        "relative_difference_percent": "0.04225923802",
+        "difference_in_stated_standard_errors": "0.7043206336",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 3.4315565829999954,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example II",
+      "dimension": 2,
+      "candidate": {
+        "probability": "0.09121878147964991547559589",
+        "log_probability": "-2.394494465827158411433381",
+        "digits": 25,
+        "method": "boundary masters / BootLoops Wayfinder",
+        "diagnostics": {
+          "masters": 6,
+          "exchangeable_faces_merged": true,
+          "connection_nonzero_entries": 9,
+          "relative_precision_agreement": "1.5892327e-43",
+          "relative_log_precision_agreement": "6.6370281e-44",
+          "runs": [
+            {
+              "transport_digits": 40,
+              "steps": 1,
+              "trunc_worst": "2.02873e-49",
+              "trunc_worst_log10": -48.69277519859358,
+              "min_hfrac": 0.5
+            },
+            {
+              "transport_digits": 60,
+              "steps": 1,
+              "trunc_worst": "2.42817e-70",
+              "trunc_worst_log10": -69.61472010976094,
+              "min_hfrac": 0.5
+            }
+          ],
+          "error_status": "precision agreement and local series estimates; not an interval certificate"
+        }
+      },
+      "direct_product_quadrature": {
+        "orders": [
+          16,
+          24
+        ],
+        "probabilities": [
+          0.0912187814796499,
+          0.09121878147964996
+        ],
+        "relative_difference": 4.440892098500626e-16,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 1.7371326599402437e-11,
+        "tolerance": 1e-10,
+        "passed": true,
+        "probability": 0.09121878148123451,
+        "log_probability": -2.394494465809787,
+        "relative_standard_error": 5.492551854380143e-12,
+        "saddle_residual": 6.661338147750939e-15,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "0.09121",
+        "printed_relative_standard_error_percent": "2e-4",
+        "relative_difference_percent": "0.00962775973",
+        "difference_in_stated_standard_errors": "48.13879865",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 0.10780487499999936,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.1 Example II",
+      "dimension": 3,
+      "candidate": {
+        "probability": "0.02307072735939417709903235",
+        "log_probability": "-3.769190678927892541193022",
+        "digits": 25,
+        "method": "boundary masters / BootLoops Wayfinder",
+        "diagnostics": {
+          "masters": 27,
+          "exchangeable_faces_merged": false,
+          "connection_nonzero_entries": 77,
+          "relative_precision_agreement": "5.7057699e-42",
+          "relative_log_precision_agreement": "1.5137918e-42",
+          "runs": [
+            {
+              "transport_digits": 40,
+              "steps": 2,
+              "trunc_worst": "2.0341e-49",
+              "trunc_worst_log10": -48.691627160062154,
+              "min_hfrac": 0.5
+            },
+            {
+              "transport_digits": 60,
+              "steps": 2,
+              "trunc_worst": "4.94204e-69",
+              "trunc_worst_log10": -68.30609342311078,
+              "min_hfrac": 0.5
+            }
+          ],
+          "error_status": "precision agreement and local series estimates; not an interval certificate"
+        }
+      },
+      "direct_product_quadrature": {
+        "orders": [
+          16,
+          24
+        ],
+        "probabilities": [
+          0.023070727359394173,
+          0.023070727359394187
+        ],
+        "relative_difference": 4.440892098500626e-16,
+        "passed": true
+      },
+      "independent_minimax": {
+        "relative_difference": 2.97673810045751e-08,
+        "tolerance": 1.4399229873071212e-07,
+        "passed": true,
+        "probability": 0.023070726672639066,
+        "log_probability": -3.769190708695273,
+        "relative_standard_error": 2.3998716455118685e-08,
+        "saddle_residual": 8.881784197001252e-16,
+        "replications": 12,
+        "points_per_replication": 4096,
+        "seed": 160304166,
+        "sequence": "independently scrambled Sobol; paper uses randomized Richtmyer"
+      },
+      "publication": {
+        "printed_probability": "0.02307",
+        "printed_relative_standard_error_percent": "4e-4",
+        "relative_difference_percent": "0.003152836559",
+        "difference_in_stated_standard_errors": "7.882091398",
+        "within_five_standard_errors_plus_printed_unit": true,
+        "comparison_rule": "five printed standard errors plus one unit of the last printed digit"
+      },
+      "seconds": 2.0624362500000046,
+      "independent_checks_passed": true
+    },
+    {
+      "family": "Section 5.3 exact orthant",
+      "dimension": 10,
+      "candidate": {
+        "probability": "0.09090909090909090909090909",
+        "log_probability": "-2.397895272798370544061944",
+        "digits": 25,
+        "method": "one Gaussian factor / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 10,
+          "runs": [
+            {
+              "work_digits": 50,
+              "mode": "1.46622941641",
+              "width": "0.545154530393",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                5,
+                5,
+                6
+              ],
+              "relative_quadrature_agreement_estimate": "4.1479491e-37"
+            },
+            {
+              "work_digits": 70,
+              "mode": "1.46622941641",
+              "width": "0.545154530393",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "3.8054118e-47"
+            }
+          ],
+          "relative_precision_agreement": "6.3461087e-32",
+          "relative_log_precision_agreement": "2.6465329e-32",
+          "error_status": "quadrature and precision agreement; not an interval certificate"
+        }
+      },
+      "exact_probability": "0.0909090909090909090909090909091",
+      "relative_difference": "2.8211864e-37",
+      "independent_checks_passed": true,
+      "seconds": 1.348472583000003
+    },
+    {
+      "family": "Section 5.3 exact orthant",
+      "dimension": 100,
+      "candidate": {
+        "probability": "0.00990099009900990099009901",
+        "log_probability": "-4.615120516841259450884198",
+        "digits": 25,
+        "method": "one Gaussian factor / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 100,
+          "runs": [
+            {
+              "work_digits": 50,
+              "mode": "2.37845043808",
+              "width": "0.385942294064",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                5,
+                5,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "1.5978914e-39"
+            },
+            {
+              "work_digits": 70,
+              "mode": "2.37845043808",
+              "width": "0.385942294064",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "7.8651262e-47"
+            }
+          ],
+          "relative_precision_agreement": "1.6073842e-32",
+          "relative_log_precision_agreement": "3.4828651e-33",
+          "error_status": "quadrature and precision agreement; not an interval certificate"
+        }
+      },
+      "exact_probability": "0.00990099009900990099009900990099",
+      "relative_difference": "2.3509887e-37",
+      "independent_checks_passed": true,
+      "seconds": 1.3013193339999987
+    },
+    {
+      "family": "Section 5.3 exact orthant",
+      "dimension": 1000,
+      "candidate": {
+        "probability": "0.000999000999000999000999001",
+        "log_probability": "-6.908754779315220585220784",
+        "digits": 25,
+        "method": "one Gaussian factor / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 1000,
+          "runs": [
+            {
+              "work_digits": 50,
+              "mode": "3.11555103953",
+              "width": "0.305475407353",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                5,
+                5,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "6.1992567e-41"
+            },
+            {
+              "work_digits": 70,
+              "mode": "3.11555103953",
+              "width": "0.305475407353",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                6,
+                5,
+                6,
+                6,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "1.2072068e-48"
+            }
+          ],
+          "relative_precision_agreement": "6.1509146e-32",
+          "relative_log_precision_agreement": "8.9030727e-33",
+          "error_status": "quadrature and precision agreement; not an interval certificate"
+        }
+      },
+      "exact_probability": "0.000999000999000999000999000999001",
+      "relative_difference": "7.1852092e-37",
+      "independent_checks_passed": true,
+      "seconds": 1.2679517500000017
+    },
+    {
+      "family": "Section 5.3 exact orthant",
+      "dimension": 10000,
+      "candidate": {
+        "probability": "0.0000999900009999000099990001",
+        "log_probability": "-9.210440366976516044407299",
+        "digits": 25,
+        "method": "one Gaussian factor / BootLoops quadrature",
+        "diagnostics": {
+          "dimension": 10000,
+          "runs": [
+            {
+              "work_digits": 50,
+              "mode": "3.73465909718",
+              "width": "0.258638315892",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                5,
+                5,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "2.0818029e-41"
+            },
+            {
+              "work_digits": 70,
+              "mode": "3.73465909718",
+              "width": "0.258638315892",
+              "quadrature_depths": [
+                2,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                7
+              ],
+              "relative_quadrature_agreement_estimate": "6.3746709e-47"
+            }
+          ],
+          "relative_precision_agreement": "3.0364089e-32",
+          "relative_log_precision_agreement": "3.2967033e-33",
+          "error_status": "quadrature and precision agreement; not an interval certificate"
+        }
+      },
+      "exact_probability": "0.00009999000099990000999900009999",
+      "relative_difference": "1.0221291e-37",
+      "independent_checks_passed": true,
+      "seconds": 1.3531642089999991
+    }
+  ],
+  "scope": "Example II validated at dimensions 2 and 3; random 100-dimensional matrices in Examples III and IV are not supplied by the paper",
+  "error_status": "Measured convergence and independent agreement, not a rigorous interval enclosure"
+}

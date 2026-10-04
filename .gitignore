@@ -1,0 +1,9 @@
+/bootloops/
+/BootLoops.pdf
+/tmp/
+.DS_Store
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+.venv/

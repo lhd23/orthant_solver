@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaussian-orthant-transport"
+version = "0.1.0"
+description = "Gaussian probabilities by boundary-master reduction and BootLoops transport"
+requires-python = ">=3.9"
+dependencies = ["mpmath>=1.2", "sympy>=1.12"]
+
+[project.optional-dependencies]
+fast = ["python-flint"]
+test = ["numpy>=1.24", "scipy>=1.10", "pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["gaussian_orthant*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

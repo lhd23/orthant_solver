@@ -1,0 +1,9 @@
+{
+  "kind": "exchangeable_precision",
+  "dimension": 50,
+  "lower": "0.5",
+  "upper": 1,
+  "diagonal": "0.5",
+  "coupling": "0.5",
+  "digits": 25
+}
