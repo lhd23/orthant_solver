@@ -7,7 +7,7 @@ precision. The package makes heavy use of [BootLoops](https://github.com/BootLoo
 for numerical integration and transport, and SymPy for symbolic preparation.
 Use this code if your number one concern is having a high-precision estimate, rather
 than having something that is fast and reasonably precise.
-This code yields estimates to your arbitrary precision.
+This code yields estimates to arbitrary precision.
 
 - Accepts a covariance or precision matrix, nonzero means, and finite or infinite bounds.
 - Returns both the probability and its natural logarithm, with convergence diagnostics.
