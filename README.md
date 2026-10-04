@@ -23,9 +23,7 @@ git clone https://github.com/BootLoops-ai/bootloops.git bootloops
 python3 -m pip install -e '.[test]'
 ```
 
-If BootLoops is already installed elsewhere, set `BOOTLOOPS_ROOT` to its
-repository directory instead of cloning it again. The `test` extra installs
-NumPy, SciPy, and pytest for the examples and validation tools.
+The `test` extra installs NumPy, SciPy, and pytest for the examples and validation tools.
 
 For optional compiled arithmetic, install `python3 -m pip install -e '.[test,fast]'`.
 This requires a Python version supported by `python-flint>=0.8`.
@@ -39,28 +37,56 @@ edges indicate infinite bounds, rather than the edge of the drawing.
 ```python
 from gaussian_orthant import gaussian_probability
 
-covariance = {
-    2: [[1, "0.5"], ["0.5", 1]],
-    3: [[1, "0.5", "0.5"], ["0.5", 1, "0.5"], ["0.5", "0.5", 1]],
-}
+# (a) Positive orthant
+a = gaussian_probability(
+    lower=[0, 0], upper=["inf", "inf"],
+    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
+)
 
-# Each entry supplies the panel name, lower bounds, and upper bounds.
-domains = [
-    ("(a) Positive orthant",       [0, 0],          ["inf", "inf"]),
-    ("(b) Shifted mixed orthant", ["0.6", "-inf"], ["inf", "0.8"]),
-    ("(c) Finite box",            ["-0.9", "-0.7"], ["1.2", "1.3"]),
-    ("(d) Semi-infinite box",     [-1, "-0.6"],     [1, "inf"]),
-    ("(e) Unbounded strip",       ["-inf", "-0.7"], ["inf", 1]),
-    ("(f) Positive orthant (3 dimensions)", [0, 0, 0], ["inf"] * 3),
-    ("(g) Finite box (3 dimensions)", [0, 0, 0], ["1.7", "1.6", "1.6"]),
-    ("(h) Semi-infinite box (3 dimensions)", [0, 0, 0], ["1.7", "1.6", "inf"]),
-]
+# (b) Shifted mixed orthant
+b = gaussian_probability(
+    lower=["0.6", "-inf"], upper=["inf", "0.8"],
+    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
+)
 
-for name, lower, upper in domains:
-    result = gaussian_probability(
-        lower, upper, covariance=covariance[len(lower)], digits=25
-    )
-    print(name, result.as_dict())
+# (c) Finite box
+c = gaussian_probability(
+    lower=["-0.9", "-0.7"], upper=["1.2", "1.3"],
+    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
+)
+
+# (d) Semi-infinite box
+d = gaussian_probability(
+    lower=[-1, "-0.6"], upper=[1, "inf"],
+    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
+)
+
+# (e) Unbounded strip
+e = gaussian_probability(
+    lower=["-inf", "-0.7"], upper=["inf", 1],
+    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
+)
+
+# (f) Positive orthant (3 dimensions)
+f = gaussian_probability(
+    lower=[0, 0, 0], upper=["inf", "inf", "inf"],
+    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
+    mean=[0, 0, 0], digits=25,
+)
+
+# (g) Finite box (3 dimensions)
+g = gaussian_probability(
+    lower=[0, 0, 0], upper=["1.7", "1.6", "1.6"],
+    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
+    mean=[0, 0, 0], digits=25,
+)
+
+# (h) Semi-infinite box (3 dimensions)
+h = gaussian_probability(
+    lower=[0, 0, 0], upper=["1.7", "1.6", "inf"],
+    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
+    mean=[0, 0, 0], digits=25,
+)
 ```
 
 The four public functions are:
@@ -103,8 +129,6 @@ than requested, so compare measured errors as well as runtimes when assessing
 performance against SciPy or other methods.
 
 ## Tests and validation
-
-Run the full suite after major changes:
 
 ```sh
 python3 -m pytest -q -rs
