@@ -1,3 +1,5 @@
+![Examples of Gaussian integration domains: orthants, finite boxes, semi-infinite boxes, and unbounded strips in two and three dimensions.](output/images/gaussian_domains.png)
+
 # Gaussian orthant probabilities using BootLoops
 
 Compute multivariate Gaussian orthant and box probabilities with configurable
