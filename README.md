@@ -85,7 +85,7 @@ gaussian_probability(
 )
 ```
 
-- Accepts a covariance or precision matrix, nonzero means, e.g.  e.g. `mean=[0.2, -0.3]`
+- Accepts a covariance or precision matrix (inverse covariance), nonzero means, e.g.  e.g. `mean=[0.2, -0.3]`
 - Returns both the probability and its natural logarithm, with convergence diagnostics.
 - Provides specialized routines for exchangeable precision matrices and equal-correlation models.
 - Evaluation of higher-dimensional Gaussians and domains also possible.
@@ -98,16 +98,13 @@ one can also call:
 - `equicorrelated_probability`: equal bounds and nonnegative equal correlations.
 
 For faster evaluation, specify `rtol` instead of `digits`, for example
-`equicorrelated_probability(10, correlation=0.5, rtol=1e-6)`. This targets an
-estimated relative probability error of one part in a million. The result
-includes `rtol` and `estimated_relative_error`; these are convergence estimates,
-not certified error bounds. This mode does not separately target relative
-accuracy in `log_probability`; `digits` in the result controls display precision.
-Without `rtol`, the existing digit mode is used.
-
-Use decimal strings or `fractions.Fraction` when inputs need more precision
+`equicorrelated_probability(10, correlation=0.5, rtol=1e-6)`. The result
+includes `rtol` and `estimated_relative_error`.
+(Note: use decimal strings or `fractions.Fraction`, as in the code above, when inputs
+need more precision
 than ordinary floating-point numbers. Use `result.as_dict()` to display the
-requested digits.
+requested digits.)
+
 
 Examples can also be run from the command line:
 
@@ -127,11 +124,14 @@ accuracy does not guarantee that both solvers achieve the same error.
 ## Arithmetic and performance
 
 Choose `backend="mpmath"` for Python arbitrary-precision arithmetic or
-`backend="flint"` for compiled arithmetic through python-flint. The default,
+`backend="flint"` for compiled numerical and exact polynomial arithmetic
+through python-flint. The default,
 `backend="auto"`, selects a compatible compiled backend when available and
 otherwise uses mpmath. An explicit compiled request requires a compatible
 python-flint installation.
 
+The compiled backend builds the general solver's boundary equations directly
+from rational polynomial coefficients, sharing factors within each construction.
 Runtime depends on dimension, matrix structure, requested precision, and
 backend. Specialized routines can handle much larger problems than the
 general solver. Precision checks may produce substantially more accuracy
