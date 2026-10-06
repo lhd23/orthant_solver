@@ -15,8 +15,10 @@
 \noaffiliation
 \date{5 October 2026}
 \begin{abstract}
-The solver evaluates Gaussian probabilities over coordinate-aligned boxes and
-orthants. For general covariance matrices, it connects the target integral to
+The solver integrates a multivariate Gaussian density over regions defined
+by coordinate bounds. These regions include orthants, finite boxes, and
+boxes that extend to infinity in some directions. For general covariance
+matrices, it connects the target integral to
 an independent Gaussian integral, reduces its derivatives to a finite system
 of boundary integrals, and uses BootLoops to transport that system. Two
 structured matrix families instead admit one-dimensional quadrature. This
@@ -25,15 +27,44 @@ accuracy and dimension.
 \end{abstract}
 \maketitle
 
-\section{Probability and continuation}
-The solver integrates a multivariate Gaussian density over regions defined
-by coordinate bounds. These regions include orthants, finite boxes, and
-boxes that extend to infinity in some directions.
+\section{Basic idea}
+The idea of the solver is to convert an integral to a differential equation.
+We introduce a parameter, differentiate the integral with respect to it,
+and use integration by parts to eliminate the additional integrals that
+appear. Known starting values then allow numerical evolution to the target.
+A Gaussian half-line integral illustrates these steps:
+\begin{equation}
+ J(t)=\int_0^\infty e^{-x^2/2-tx}\dd x,
+ \qquad J(0)=(\pi/2)^{1/2}.
+ \label{eq:toy-integral}
+\end{equation}
+Differentiation gives $\frac{\dd J}{\dd t}=-M_1(t)$, where
+$M_1(t)=\int_0^\infty x e^{-x^2/2-tx}\dd x$ is an unnormalized first
+moment. To eliminate it, write $f_t(x)=e^{-x^2/2-tx}$ and integrate
+$\partial f_t/\partial x=-(x+t)f_t$ over the half-line. The boundary values give
+$f_t(\infty)-f_t(0)=-1=-M_1(t)-tJ(t)$, so $M_1(t)=1-tJ(t)$.
+Substitution closes the equation:
+\begin{equation}
+ \frac{\dd J}{\dd t}=tJ(t)-1,\qquad J(0)=(\pi/2)^{1/2}.
+ \label{eq:toy-equation}
+\end{equation}
+Solving this first-order ordinary differential equation yields the integral
+at the desired parameter value. The constant term comes from the finite
+boundary at $x=0$; the contribution at infinity vanishes.
 
-Let $X$ have mean $\mu$ and positive-definite covariance $\Sigma$. Set
+This example varies a linear term in the exponent. The general solver
+instead varies the coupling between Gaussian coordinates. It applies the
+same reduction to the full integral and its boundary integrals, producing
+a coupled first-order system that BootLoops evolves from known starting
+values.
+
+\section{Probability and continuation}
+The integrals the solver actually evaluates are of course more complicated
+than described above. Let $X$ have mean $\mu$ and positive-definite covariance
+$\Sigma$. Set
 $Q=\Sigma^{-1}$, $x=X-\mu$, $\ell=L-\mu$, and $u=U-\mu$. The target is
 \begin{equation}
- p=\frac{\sqrt{\det Q}}{(2\pi)^{d/2}}J_{\mathrm{full}}(1),\qquad
+ p=\frac{(\det Q)^{1/2}}{(2\pi)^{d/2}}J_{\mathrm{full}}(1),\qquad
  J_{\mathrm{full}}(t)=\int_{\ell\leq x\leq u}
  \exp[-x^{\mathsf T}Q(t)x/2]\dd^d x .
  \label{eq:target}
@@ -70,7 +101,7 @@ $m_i=\int_F x_i f_t\dd x_A$, and
 $M_{ij}=\int_F x_ix_j f_t\dd x_A$ for free indices. Direct differentiation
 gives
 \begin{equation}
- J_F'=-\tfrac12\operatorname{tr}(E_{AA}M)
+ \frac{\dd J_F}{\dd t}=-\tfrac12\operatorname{tr}(E_{AA}M)
        -(E_{AB}b)^{\mathsf T}m
        -\tfrac12 b^{\mathsf T}E_{BB}b\,J_F .
  \label{eq:derivative}
@@ -84,7 +115,7 @@ terms of $J_F$, $m$, and child-face terms. A child face fixes one more
 coordinate, so recursive reduction ends at corner values. Substitution
 into Eq.~\eqref{eq:derivative} yields the closed system
 \begin{equation}
- J'(t)=\mathcal A(t)J(t).
+ \frac{\dd J}{\dd t}=\mathcal A(t)J(t).
  \label{eq:system}
 \end{equation}
 Each entry of $\mathcal A(t)$ is rational: the inversions involve principal
@@ -92,18 +123,18 @@ submatrices of the linear matrix $Q(t)$. The retained family need not be a
 minimal basis.
 
 At $t=0$, a free coordinate $i$ contributes
-$\sqrt{2\pi/D_{ii}}[\Phi(u_i\sqrt{D_{ii}})-\Phi(\ell_i\sqrt{D_{ii}})]$;
+$(2\pi/D_{ii})^{1/2}[\Phi(u_iD_{ii}^{1/2})-\Phi(\ell_iD_{ii}^{1/2})]$;
 a coordinate fixed at $b_i$ contributes $\exp(-D_{ii}b_i^2/2)$.
 Their product gives $s_F=J_F(0)$. Scaling by
 $S=\operatorname{diag}(s_F)$ gives $W=S^{-1}J$ and
 \begin{equation}
- W'=\mathcal C(t)W,\qquad
+ \frac{\dd W}{\dd t}=\mathcal C(t)W,\qquad
  \mathcal C=S^{-1}\mathcal A S,\qquad W(0)=\one .
  \label{eq:scaled}
 \end{equation}
 BootLoops advances this rational system from $t=0$ to $t=1$ with local
 Taylor expansions and step control. Finally,
-$p=\sqrt{\det Q}\,s_{\mathrm{full}}W_{\mathrm{full}}(1)/(2\pi)^{d/2}$.
+$p=(\det Q)^{1/2}\,s_{\mathrm{full}}W_{\mathrm{full}}(1)/(2\pi)^{d/2}$.
 
 \section{Implementation}
 Algorithm~\ref{alg:general} states the general route. The independent and
@@ -131,12 +162,12 @@ shows the numerical workflow and the role of each software component.
      Handle trivial / independent events};
 \node[process] (build) at (0,-4.3)
     {Set $Q(t)=D+tE$; retain faces\\
-     Integration by parts: $J'=\mathcal A(t)J$\\
+     $\dd J/\dd t=\mathcal A(t)J$\\
      Exact polynomial arithmetic\\
      {\scriptsize\code{BoundarySystem}}};
 \node[process] (seed) at (0,-6.4)
     {Independent seeds $s_F=J_F(0)$\\
-     Scale to $W'=S^{-1}\mathcal A S W$, $W(0)=\one$\\
+     Scale to $\dd W/\dd t=\mathcal C W$\\
      {\scriptsize\code{BoundarySystem.normalized}}};
 \node[process] (transport) at (0,-8.3)
     {BootLoops: transport from $t=0$ to $1$\\
@@ -190,10 +221,10 @@ shows the numerical workflow and the role of each software component.
 \EndIf
 \State Set $Q(t)\gets\operatorname{diag}(Q)+t[Q-\operatorname{diag}(Q)]$.
 \State Count and retain eligible faces, merging symmetric ones when possible.
-\State Build the rational system $J'=\mathcal A J$ by integration by parts.
+\State Build the rational system $\dd J/\dd t=\mathcal A J$ by integration by parts.
 \For{each permitted precision and transport refinement}
     \State Evaluate seeds $s_F=J_F(0)$ and form $\mathcal C=S^{-1}\mathcal A S$.
-    \State Use BootLoops to transport $W'=\mathcal C W$, $W(0)=\one$, to $t=1$.
+    \State Use BootLoops to transport $\dd W/\dd t=\mathcal C W$, $W(0)=\one$, to $t=1$.
     \State Normalize the full-region component to obtain $p$.
     \If{successive refinements and residual checks pass}
         \State \Return $p$, $\log p$, and diagnostics.
@@ -224,11 +255,11 @@ rather than the independent value $1/4$.
 \section{Structured cases, accuracy, and limits}
 Two matrix families avoid the face system. For equal nonnegative correlation
 $\rho$ and common standardized bounds $\ell,u$, write
-$X_i=\sqrt{\rho}\,Z+\sqrt{1-\rho}\,Z_i$ with independent standard-normal
+$X_i=\rho^{1/2}\,Z+(1-\rho)^{1/2}\,Z_i$ with independent standard-normal
 variables. Conditioning on $Z=z$ gives the one-dimensional integral
 $p=\int_{\mathbb R}\phi(z)g(z)^d\dd z$, where
-$g(z)=\Phi[(u-\sqrt{\rho}z)/\sqrt{1-\rho}]
--\Phi[(\ell-\sqrt{\rho}z)/\sqrt{1-\rho}]$.
+$g(z)=\Phi[(u-\rho^{1/2}z)/(1-\rho)^{1/2}]
+-\Phi[(\ell-\rho^{1/2}z)/(1-\rho)^{1/2}]$.
 For exchangeable precision $Q=aI+b\one\one^{\mathsf T}$ with $b\geq0$
 and common finite bounds, a Fourier identity separates the quadratic
 coupling into one integration variable\cite{hubbard}. The implementation
