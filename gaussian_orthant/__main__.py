@@ -10,14 +10,20 @@ from . import (gaussian_probability, orthant_probability,
 def main():
     parser = argparse.ArgumentParser(description="Evaluate a Gaussian probability with BootLoops")
     parser.add_argument("input", type=Path, help="JSON problem description")
-    parser.add_argument("--digits", type=int, help="Override the input's requested precision")
+    accuracy = parser.add_mutually_exclusive_group()
+    accuracy.add_argument("--digits", type=int, help="Override the input's requested precision")
+    accuracy.add_argument("--rtol", help="Request an estimated relative probability error")
     parser.add_argument("--backend", choices=("auto", "mpmath", "flint"),
                         help="Override the arithmetic backend")
     args = parser.parse_args()
     problem = json.loads(args.input.read_text())
     kind = problem.pop("kind", "box")
     if args.digits is not None:
+        problem.pop("rtol", None)
         problem["digits"] = args.digits
+    if args.rtol is not None:
+        problem.pop("digits", None)
+        problem["rtol"] = args.rtol
     if args.backend is not None:
         problem["backend"] = args.backend
     evaluators = {"box": gaussian_probability, "orthant": orthant_probability,

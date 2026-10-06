@@ -147,16 +147,22 @@ class ProbabilityResult:
     digits: int
     method: str
     diagnostics: Dict[str, Any] = field(default_factory=dict)
+    rtol: Any = None
+    estimated_relative_error: Any = None
 
     def as_dict(self):
         with mp.workdps(self.digits + 10):
-            return {
+            output = {
                 "probability": mp.nstr(self.probability, self.digits),
                 "log_probability": mp.nstr(self.log_probability, self.digits),
                 "digits": self.digits,
                 "method": self.method,
                 "diagnostics": self.diagnostics,
             }
+            if self.rtol is not None:
+                output.update(rtol=mp.nstr(self.rtol, self.digits),
+                              estimated_relative_error=mp.nstr(self.estimated_relative_error, 8))
+            return output
 
 
 def result(value, digits, method, diagnostics):

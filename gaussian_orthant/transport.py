@@ -16,9 +16,12 @@ from mpmath import mp
 from ._bootloops import engines
 from ._independent import independent_probability
 from ._kernels import resolve_backend
+from ._tolerance import exact_rtol, finish_rtol, goal_digits, resolve_accuracy
 from ._series import polynomial_value, rational_series
-from .common import (ConvergenceError, check_digits, complement_guard_digits,
-                     normal_interval, number, precision_errors, rational, result)
+from ._symbolic import reduced_inverse, use_reduced_inverse
+from .common import (ConvergenceError, complement_guard_digits,
+                     interval_guard_digits, normal_interval, number,
+                     precision_errors, rational, result)
 
 
 def _matrix(data, digits):
@@ -86,7 +89,7 @@ def _add(out, key, value):
 class BoundarySystem:
     """Exact rational connection, before constant diagonal normalization."""
 
-    def __init__(self, q, lower, upper, max_masters=256):
+    def __init__(self, q, lower, upper, max_masters=256, *, polynomial_backend=None):
         self.q, self.lower, self.upper = q, lower, upper
         self.d = q.rows
         self.var = "t"
@@ -117,6 +120,20 @@ class BoundarySystem:
         self.qt = self.diagonal + self.t * self.e
         self.entries = {}
         self.free_sets = set()
+        self.polynomial_statistics = {}
+        if polynomial_backend == "flint":
+            from ._polynomial import build_connection, compiled_polynomials
+            module = compiled_polynomials()
+            if module is not None:
+                self.entries, self.free_sets, self.polynomial_statistics = build_connection(
+                    q, lower, upper, self.faces, self.index, self.exchangeable, module)
+                self.symbolic_strategy = "compiled polynomial connection"
+                return
+        accelerated = use_reduced_inverse(self.exchangeable, self.d)
+        self.symbolic_strategy = "controlled elimination" if accelerated else "SymPy inverse"
+        # Reuse identical reductions only while this one system is built.
+        # No prepared systems or problem inputs are retained between calls.
+        cancel = lru_cache(None)(sp.cancel) if accelerated else sp.cancel
 
         @lru_cache(None)
         def face_data(face):
@@ -129,7 +146,8 @@ class BoundarySystem:
 
         @lru_cache(None)
         def inverse(free):
-            return self.qt.extract(free, free).inv()
+            matrix = self.qt.extract(free, free)
+            return reduced_inverse(matrix, cancel) if accelerated else matrix.inv()
 
         def children(face, j):
             for flag, sign, endpoint in [(1, -1, lower[j]), (2, 1, upper[j])]:
@@ -154,7 +172,7 @@ class BoundarySystem:
                 for j, other in enumerate(free):
                     for child, sign, _ in children(face, other):
                         _add(row, index(child), -sign * r[k, j])
-                answer[coordinate] = {key: sp.cancel(value) for key, value in row.items() if value != 0}
+                answer[coordinate] = {key: cancel(value) for key, value in row.items() if value != 0}
             return answer
 
         for face in self.faces:
@@ -268,7 +286,7 @@ class BoundarySystem:
 
 
 def transport_probability(lower, upper, *, covariance=None, precision=None,
-                          mean=None, digits=25, max_masters=256, backend="auto"):
+                          mean=None, digits=None, rtol=None, max_masters=256, backend="auto"):
     """Evaluate a Gaussian box or orthant using the actual BootLoops engine.
 
     Default resource cap: at most 256 boundary masters (five fully bounded
@@ -277,18 +295,28 @@ def transport_probability(lower, upper, *, covariance=None, precision=None,
     fractions are recommended for high-precision input. backend="auto"
     selects compiled arithmetic when available; "mpmath" forces Python
     arithmetic and "flint" requires the optional python-flint package.
+    A compatible compiled backend also constructs the exact connection using
+    rational polynomial arithmetic; otherwise construction remains in SymPy.
     """
-    check_digits(digits)
+    digits, rtol = resolve_accuracy(digits, rtol, 25)
     backend = resolve_backend(backend)
     q, lo, hi = prepare(lower, upper, covariance, precision, mean, digits)
     if any(a == b for a, b in zip(lo, hi)):
+        if rtol is not None:
+            return exact_rtol(mp.mpf(0), digits, "zero-width box", {}, rtol)
         return result(mp.mpf(0), digits, "zero-width box", {})
     if all(a == -sp.oo and b == sp.oo for a, b in zip(lo, hi)):
+        if rtol is not None:
+            return exact_rtol(mp.mpf(1), digits, "full Gaussian space",
+                              {"dimension": q.rows}, rtol)
         return result(mp.mpf(1), digits, "full Gaussian space", {"dimension": q.rows})
     if q.is_diagonal():
-        return independent_probability(lo, hi, tuple(q.diagonal()), digits=digits, backend=backend)
-    system = BoundarySystem(q, lo, hi, max_masters)
+        return independent_probability(lo, hi, tuple(q.diagonal()), digits=digits,
+                                       backend=backend, rtol=rtol)
+    system = BoundarySystem(q, lo, hi, max_masters, polynomial_backend=backend)
     determinant = q.det()
+    if rtol is not None:
+        return _transport_rtol(system, determinant, digits, rtol, backend)
     log_guard = 0
     if all(a < 0 < b for a, b in zip(lo, hi)):
         with mp.workdps(digits + 25):
@@ -322,6 +350,8 @@ def transport_probability(lower, upper, *, covariance=None, precision=None,
                         "masters": system.n,
                         "backend": backend,
                         "exchangeable_faces_merged": system.exchangeable,
+                        "symbolic_strategy": system.symbolic_strategy,
+                        "polynomial_statistics": system.polynomial_statistics,
                         "connection_nonzero_entries": len(system.entries),
                         "relative_precision_agreement": mp.nstr(relative, 8),
                         "relative_log_precision_agreement": mp.nstr(log_relative, 8),
@@ -330,3 +360,80 @@ def transport_probability(lower, upper, *, covariance=None, precision=None,
                     })
             previous = value
     raise ConvergenceError("Boundary transport did not pass the relative precision agreement gate")
+
+
+def _transport_rtol(system, determinant, digits, rtol, backend):
+    """Check the root probability after distinct, inexpensive transports.
+
+    A vector-norm local Taylor estimate alone cannot establish relative
+    accuracy of a small root component. Change both precision and the
+    step fraction/order before accepting the root's agreement. Reserve
+    precision for exact narrow endpoints, and retain higher-precision
+    fallbacks for rare events whose root is small relative to other masters.
+    """
+    transport, _, _ = engines()
+    goal, previous, histories = goal_digits(rtol), None, []
+    cancellation = max(interval_guard_digits(a, b)
+                       for a, b in zip(system.lower, system.upper))
+    order_floor, last_failure = 0, None
+    for attempt, extra in enumerate((0, 1, 3, 7, 15, 31, 63, 127, 255)):
+        # Wayfinder controls its own arithmetic from requested precision.
+        # The interval guard must therefore reach the engine as well as the
+        # seed/connection construction, so endpoint differences survive both.
+        requested = goal + 1 + cancellation + extra
+        work_digits = requested + 30
+        initial_order = max(24, int(0.75 * requested) + 18) + (4 if attempt else 0)
+        initial_order = max(initial_order, order_floor)
+        ratio = 0.5 if attempt % 2 == 0 else 0.4
+        with mp.workdps(work_digits):
+            connection, anchor = system.normalized(work_digits, backend=backend)
+            # Cheap Taylor caps are speed seeds, not reasons to reject a
+            # valid Gaussian problem. Retry recognized convergence failures
+            # at the same precision before moving to the next refinement.
+            for order in (initial_order, max(60, 2 * initial_order),
+                          max(120, 4 * initial_order)):
+                try:
+                    values, diagnostics = transport(
+                        connection, 0, 0, 1, [1] * system.n, requested,
+                        mtay=order, ratio=ratio, guard_extra=2, return_diag=True,
+                        backend="acb" if backend == "flint" else "mpmath")
+                except (AssertionError, RuntimeError) as error:
+                    message = str(error)
+                    retryable = ((isinstance(error, AssertionError)
+                                 and "cannot converge even at step fraction" in message)
+                                 or (isinstance(error, RuntimeError)
+                                     and message.startswith("too many steps (")
+                                     and " on leg " in message))
+                    if not retryable:
+                        raise
+                    last_failure = error
+                    histories.append({"transport_digits": requested,
+                                      "taylor_order": order, "step_fraction": ratio,
+                                      "failure": message})
+                    continue
+                order_floor = order
+                break
+            else:
+                continue
+            normalizer = mp.sqrt(number(determinant)) / mp.power(2 * mp.pi, system.d / 2)
+            value = mp.re(values[0]) * anchor * normalizer
+            histories.append({"transport_digits": requested, "taylor_order": order,
+                              "step_fraction": ratio, **diagnostics})
+            if previous is not None and mp.isfinite(value) and 0 < value <= 1:
+                estimate = 4 * abs(value - previous) / value
+                # Includes the returned root's significant-digit rounding;
+                # local vector estimates are diagnostics, not root bounds.
+                estimate += 4 * mp.power(10, -requested)
+                estimate += abs(mp.im(values[0])) / abs(mp.re(values[0]))
+                if estimate < rtol / 2:
+                    return finish_rtol(value, digits, "boundary masters / BootLoops Wayfinder", {
+                        "masters": system.n, "backend": backend,
+                        "interval_guard_digits": cancellation,
+                        "exchangeable_faces_merged": system.exchangeable,
+                        "symbolic_strategy": system.symbolic_strategy,
+                        "polynomial_statistics": system.polynomial_statistics,
+                        "connection_nonzero_entries": len(system.entries),
+                        "relative_precision_agreement": mp.nstr(abs(value - previous) / value, 8),
+                        "runs": histories}, rtol, estimate)
+            previous = value
+    raise ConvergenceError("Boundary transport did not meet rtol") from last_failure

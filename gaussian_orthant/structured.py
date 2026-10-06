@@ -4,7 +4,9 @@ from mpmath import mp
 from ._bootloops import engines
 from ._independent import independent_probability
 from ._kernels import exponential_interval as compiled_exponential_interval, resolve_backend
-from .common import (ConvergenceError, check_digits, check_dimension,
+from ._tolerance import (exact_rtol, finish_rtol, goal_digits, magnitude_guard,
+                         resolve_accuracy)
+from .common import (ConvergenceError, check_dimension,
                      centered_interval_moments, complement_guard_digits,
                      interval_guard_digits, normal_interval, number,
                      precision_errors, rational, result)
@@ -125,7 +127,7 @@ def _factor_scale_bound(dimension, common, independent, width):
 
 def exchangeable_precision_probability(dimension, lower, upper, *,
                                        diagonal="0.5", coupling="0.5", mean=0,
-                                       digits=30, backend="auto"):
+                                       digits=None, rtol=None, backend="auto"):
     """P(lower <= X_i <= upper), Q = diagonal*I + coupling*11^T.
 
     Finite equal bounds, diagonal > 0, coupling >= 0. A contour shift of
@@ -133,9 +135,12 @@ def exchangeable_precision_probability(dimension, lower, upper, *,
     saddle. The Gaussian tail has an analytic relative bound. Rule and
     precision agreement still give empirical quadrature errors, not a
     rigorous enclosure of the complete probability.
+    Defaults to digits=30; alternatively rtol requests an estimated relative
+    probability error with adaptive quadrature, without a logarithm target.
     """
-    check_digits(digits)
+    digits, rtol = resolve_accuracy(digits, rtol, 30)
     check_dimension(dimension)
+    dimension = int(dimension)
     backend = resolve_backend(backend)
     exact_a, exact_b, exact_mu = map(rational, (diagonal, coupling, mean))
     exact_lo, exact_hi = map(rational, (lower, upper))
@@ -144,13 +149,18 @@ def exchangeable_precision_probability(dimension, lower, upper, *,
     if exact_a <= 0 or exact_b < 0 or exact_lo > exact_hi:
         raise ValueError("Require diagonal > 0, coupling >= 0, and lower <= upper")
     if exact_lo == exact_hi:
+        if rtol is not None:
+            return exact_rtol(mp.mpf(0), digits, "zero-width box", {}, rtol)
         return result(mp.mpf(0), digits, "zero-width box", {})
     exact_lo, exact_hi = exact_lo - exact_mu, exact_hi - exact_mu
     if dimension == 1 or exact_b == 0:
         diagonal_precision = exact_a + exact_b if dimension == 1 else exact_a
         return independent_probability((exact_lo,), (exact_hi,), (diagonal_precision,),
-                                       digits=digits, backend=backend, repeat=dimension)
+                                       digits=digits, backend=backend, repeat=dimension, rtol=rtol)
     cancellation_digits = interval_guard_digits(exact_lo, exact_hi)
+    if rtol is not None:
+        return _exchangeable_rtol(dimension, exact_lo, exact_hi, exact_a, exact_b,
+                                  digits, rtol, cancellation_digits, backend)
     with mp.workdps(digits + 25 + cancellation_digits):
         a, b = number(exact_a), number(exact_b)
         marginal_sigma = mp.sqrt((a + b * (dimension - 1)) / (a * (a + b * dimension)))
@@ -222,14 +232,17 @@ def exchangeable_precision_probability(dimension, lower, upper, *,
 
 def equicorrelated_probability(dimension, lower=0, upper="inf", *,
                               correlation="0.5", standard_deviation=1,
-                              mean=0, digits=30, backend="auto"):
+                              mean=0, digits=None, rtol=None, backend="auto"):
     """One-factor Gaussian reduction, with equal bounds and nonnegative correlation.
 
     X_i = mean + standard_deviation*(sqrt(correlation)*Z
           + sqrt(1-correlation)*Z_i), with all Z independent standard normals.
+    Defaults to digits=30. Specify rtol instead for faster estimated relative
+    probability accuracy; no separate log_probability accuracy is imposed.
     """
-    check_digits(digits)
+    digits, rtol = resolve_accuracy(digits, rtol, 30)
     check_dimension(dimension)
+    dimension = int(dimension)
     backend = resolve_backend(backend)
     exact_rho, exact_sigma, exact_mu = map(rational, (correlation, standard_deviation, mean))
     exact_lo, exact_hi = map(rational, (lower, upper))
@@ -240,12 +253,17 @@ def equicorrelated_probability(dimension, lower=0, upper="inf", *,
             or not (exact_hi.is_real or exact_hi.is_infinite) or exact_lo > exact_hi):
         raise ValueError("Require 0 <= correlation < 1, standard_deviation > 0 and valid bounds")
     if exact_lo == exact_hi:
+        if rtol is not None:
+            return exact_rtol(mp.mpf(0), digits, "zero-width box", {}, rtol)
         return result(mp.mpf(0), digits, "zero-width box", {})
     exact_lo, exact_hi = (exact_lo - exact_mu) / exact_sigma, (exact_hi - exact_mu) / exact_sigma
     if dimension == 1 or exact_rho == 0 or (exact_lo.is_infinite and exact_hi.is_infinite):
         return independent_probability((exact_lo,), (exact_hi,), (rational(1),),
-                                       digits=digits, backend=backend, repeat=dimension)
+                                       digits=digits, backend=backend, repeat=dimension, rtol=rtol)
     cancellation_digits = interval_guard_digits(exact_lo, exact_hi)
+    if rtol is not None:
+        return _equicorrelated_rtol(dimension, exact_lo, exact_hi, exact_rho,
+                                    digits, rtol, cancellation_digits, backend)
     with mp.workdps(digits + 25 + cancellation_digits):
         log_guard = complement_guard_digits(number(exact_lo), number(exact_hi))
     _, quadrature, _ = engines()
@@ -296,3 +314,120 @@ def equicorrelated_probability(dimension, lower=0, upper="inf", *,
                     })
             previous = value
     raise ConvergenceError("One-factor quadrature did not pass relative precision agreement")
+
+
+def _quadrature_rtol(build, dimension, digits, rtol, guard, backend, method):
+    """Let nested BootLoops rules resolve integration before raising precision.
+
+    Agreement, representation rounding and roundoff are estimated separately
+    from the analytic tail. A single successful nested refinement suffices;
+    the legacy second full high-precision integration is not required.
+    """
+    _, quadrature, _ = engines()
+    goal, runs = goal_digits(rtol), []
+    for extra in (0, 4, 12, 28, 60):
+        quadrature_digits = goal + 1 + extra
+        work_digits = quadrature_digits + 17 + guard
+        with mp.workdps(work_digits):
+            integrand, points, scale, log_prefactor, tail, metadata = build(goal, rtol)
+            try:
+                certificate = quadrature(integrand, points, quadrature_digits,
+                                         guard=1, wp_extra=16 + guard, depth0=2,
+                                         max_depth=12, scale=scale, full_output=True)
+            except RuntimeError as error:
+                if type(error).__name__ != "QuadNonConvergence":
+                    raise
+                runs.append({"work_digits": work_digits, "failure": str(error)})
+                continue
+            integral = mp.re(certificate.value)
+            if not mp.isfinite(integral) or integral <= 0:
+                runs.append({"work_digits": work_digits, "failure": "nonpositive integral"})
+                continue
+            value = mp.exp(log_prefactor) * integral
+            arithmetic = mp.power(10, -(work_digits - 6)) * max(
+                1, dimension, abs(log_prefactor))
+            estimate = 4 * certificate.err_bound / integral + tail + arithmetic
+            runs.append({"work_digits": work_digits,
+                         "quadrature_digits": quadrature_digits,
+                         "quadrature_depths": list(certificate.depths),
+                         "integrand_evaluations": certificate.evals,
+                         "relative_quadrature_error_estimate": mp.nstr(
+                             4 * certificate.err_bound / integral, 8),
+                         "relative_analytic_tail_bound": mp.nstr(tail, 8),
+                         **metadata})
+            if mp.isfinite(value) and 0 < value <= 1 and estimate < rtol / 2:
+                return finish_rtol(value, digits, method,
+                                   {"dimension": dimension, "backend": backend,
+                                    "runs": runs}, rtol, estimate)
+    raise ConvergenceError("Structured quadrature did not meet rtol")
+
+
+def _equicorrelated_rtol(dimension, lower, upper, correlation, digits, rtol,
+                         cancellation, backend):
+    guard = cancellation + magnitude_guard(lower, upper) + len(str(dimension))
+
+    def build(goal, tolerance):
+        lo, hi = number(lower), number(upper)
+        common, independent = mp.sqrt(number(correlation)), mp.sqrt(number(1 - correlation))
+        mode, width, peak_mass = _factor_peak(dimension, lo, hi, common, independent,
+                                             goal, backend)
+        log_peak_mass = mp.log(peak_mass)
+        log_peak = -mode * mode / 2 - mp.log(2 * mp.pi) / 2 + dimension * log_peak_mass
+
+        def integrand(w):
+            z = mode + width * w
+            mass = normal_interval((lo - common * z) / independent,
+                                   (hi - common * z) / independent, backend=backend)
+            return mp.exp(-(z - mode) * (z + mode) / 2
+                          + dimension * (mp.log(mass) - log_peak_mass))
+
+        scale = _factor_scale_bound(dimension, common, independent, width)
+        # Splitting at the centred peak resolves both tails without eight
+        # separately refined segments. No finite tail is discarded here.
+        return (integrand, [mp.ninf, 0, mp.inf], scale, log_peak + mp.log(width),
+                mp.mpf(0), {"mode": mp.nstr(mode, 12), "width": mp.nstr(width, 12),
+                            "scale_source": "analytic curvature lower bound"})
+
+    return _quadrature_rtol(build, dimension, digits, rtol, guard, backend,
+                            "one Gaussian factor / BootLoops quadrature")
+
+
+def _exchangeable_rtol(dimension, lower, upper, diagonal, coupling, digits, rtol,
+                       cancellation, backend):
+    guard = cancellation + magnitude_guard(lower, upper, diagonal, coupling)
+    guard += len(str(dimension))
+
+    def build(goal, tolerance):
+        a, b = number(diagonal), number(coupling)
+        lo, hi = number(lower), number(upper)
+        lam, mass, variance, mean = _saddle(a, b, dimension, lo, hi, goal, backend)
+        width = mp.sqrt(b / (1 + b * dimension * variance))
+        log_prefactor = (((dimension - 1) * mp.log(a) + mp.log(a + b * dimension)) / 2
+                         - dimension * mp.log(2 * mp.pi) / 2
+                         + lam * lam / (2 * b) + dimension * mp.log(mass)
+                         + mp.log(2 * width / mp.sqrt(2 * mp.pi * b)))
+        residual = dimension * mean - lam / b
+        variance_bound = dimension * (hi - lo) ** 2 / 4 + residual ** 2
+        tail_target = tolerance / 16
+        cutoff = mp.sqrt(2 * b * (mp.log(32 / tolerance) + b * variance_bound / 2))
+        tail = mp.erfc(cutoff / mp.sqrt(2 * b)) * mp.exp(b * variance_bound / 2)
+        while tail > tail_target:
+            cutoff *= mp.mpf("1.1")
+            tail = mp.erfc(cutoff / mp.sqrt(2 * b)) * mp.exp(b * variance_bound / 2)
+
+        def integrand(z):
+            y = width * z
+            ratio = _exponential_interval(a, lam - 1j * y, lo, hi, backend) / mass
+            return mp.exp(-y * y / (2 * b)) * mp.re(mp.exp(-1j * lam * y / b)
+                                                  * ratio ** dimension)
+
+        end = cutoff / width
+        points = sorted(set([mp.mpf(0), min(end, mp.mpf(1)), min(end, mp.mpf(4)), end]))
+        # Jensen's lower bound on the reduced integral supplies a relative
+        # scale even for oscillatory integrands and extremely rare boxes.
+        scale = mp.sqrt(2 * mp.pi * b) / (2 * width) * mp.exp(-b * variance_bound / 2)
+        return integrand, points, scale, log_prefactor, tail, {
+            "saddle": mp.nstr(lam, 12), "centering_residual": mp.nstr(residual, 8)}
+
+    return _quadrature_rtol(build, dimension, digits, rtol, guard, backend,
+                            "one auxiliary field / BootLoops quadrature")

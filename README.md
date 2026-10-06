@@ -17,7 +17,7 @@ for the methods and their derivation.
 Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
 
 ```sh
-git clone https://github.com/BootLoops-ai/bootloops.git bootloops
+git clone https://github.com/BootLoops-ai/bootloops.git
 python3 -m pip install -e '.[test]'
 ```
 
