@@ -12,24 +12,6 @@ This code yields estimates to arbitrary precision.
 See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
 for the methods and their derivation.
 
-<img src="output/images/flopscope_solver_error_comparison_1x3.png"
-     alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
-     width="100%">
-
-## Installation
-
-Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
-
-```sh
-git clone https://github.com/BootLoops-ai/bootloops.git
-python3 -m pip install -e '.[test]'
-```
-
-The `test` extra installs NumPy, SciPy, and pytest for the examples and validation tools.
-
-For optional compiled arithmetic, install `python3 -m pip install -e '.[test,fast]'`.
-This requires a Python version supported by `python-flint>=0.8`.
-
 ## Usage
 
 To evaluate the eight domains labelled (a)-(h) in the banner:
@@ -125,6 +107,10 @@ Use `--digits 8 10` to compare multiple accuracy targets, or
 `--match-achieved` to require comparable achieved errors. A shared requested
 accuracy does not guarantee that both solvers achieve the same error.
 
+<img src="output/images/flopscope_solver_error_comparison_1x3.png"
+     alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
+     width="100%">
+
 ## Arithmetic and performance
 
 Choose `backend="mpmath"` for Python arbitrary-precision arithmetic or
@@ -142,16 +128,19 @@ general solver. Precision checks may produce substantially more accuracy
 than requested, so compare measured errors as well as runtimes when assessing
 performance against SciPy or other methods.
 
-## Tests and validation
+## Installation
+
+Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
 
 ```sh
-python3 -m pytest -q -rs
+git clone https://github.com/BootLoops-ai/bootloops.git
+python3 -m pip install -e '.[test]'
 ```
 
-- The regression campaign covers examples from [Botev, Section 5](https://arxiv.org/html/1603.04166), exact reference cases, and SciPy comparisons.
-- Independent integration and minimax tilting provide additional checks.
-- Compiled-backend tests run when python-flint is available; set `ORTHANT_REQUIRE_FLINT=1` to require it.
-- See the [test guide](tests/README.md) for acceptance criteria and the [test report](results/regression_tests.md) for recorded results.
+The `test` extra installs NumPy, SciPy, and pytest for the examples and validation tools.
+
+For optional compiled arithmetic, install `python3 -m pip install -e '.[test,fast]'`.
+This requires a Python version supported by `python-flint>=0.8`.
 
 ## Limits
 
