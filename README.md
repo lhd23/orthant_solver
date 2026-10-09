@@ -12,6 +12,21 @@ This code yields estimates to arbitrary precision.
 See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
 for the methods and their derivation.
 
+
+## Performance
+`orthant_solver` has been compared with three popular methods: (i) randomized lattice integration (Genz-Bretz 2009),
+(ii) minimax exponential tilting (Botev 2016), and (iii) recursive deterministic integration (Miwa et al. 2003).
+A generic unstructured covariance matrix is assumed.
+
+<img src="output/images/flopscope_solver_error_comparison_1x3.png"
+     alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
+     width="100%">
+(Note: in third plot green curve is out of frame to the top right.)
+
+The solver outperforms all other methods (much more so as the number of dimensions increases).
+Other methods should be considered (e.g. Botev's method) if integrating
+much higher than ten dimensions.
+
 ## Usage
 
 To evaluate the eight domains labelled (a)-(h) in the banner:
@@ -96,21 +111,6 @@ Examples can also be run from the command line:
 ```sh
 python3 -m gaussian_orthant examples/orthant.json
 ```
-
-## Performance
-We compared `orthant_solver` with three popular methods: (i) randomized lattice integration (Genz-Bretz 2009),
-(ii) minimax exponential tilting (Botev 2016), and (iii) recursive deterministic integration (Miwa et al. 2003).
-A generic unstructured covariance matrix is assumed.
-
-<img src="output/images/flopscope_solver_error_comparison_1x3.png"
-     alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
-     width="100%">
-
-Our solver outperforms all other methods, and much more so as the number of dimensions increases.
-Other methods should be considered (e.g. Botev's method) if integrating
-much higher than ten dimensions.
-
-Note: in third plot green curve is out of frame (top right).
 
 ## Installation
 
