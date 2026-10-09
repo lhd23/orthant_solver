@@ -111,6 +111,21 @@ accuracy does not guarantee that both solvers achieve the same error.
      alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
      width="100%">
 
+
+## Installation
+
+Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
+
+```sh
+git clone https://github.com/BootLoops-ai/bootloops.git
+python3 -m pip install -e '.[test]'
+```
+
+The `test` extra installs NumPy, SciPy, and pytest for the examples and validation tools.
+
+For optional compiled arithmetic, install `python3 -m pip install -e '.[test,fast]'`.
+This requires a Python version supported by `python-flint>=0.8`.
+
 ## Arithmetic and performance
 
 Choose `backend="mpmath"` for Python arbitrary-precision arithmetic or
@@ -127,20 +142,6 @@ backend. Specialized routines can handle much larger problems than the
 general solver. Precision checks may produce substantially more accuracy
 than requested, so compare measured errors as well as runtimes when assessing
 performance against SciPy or other methods.
-
-## Installation
-
-Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
-
-```sh
-git clone https://github.com/BootLoops-ai/bootloops.git
-python3 -m pip install -e '.[test]'
-```
-
-The `test` extra installs NumPy, SciPy, and pytest for the examples and validation tools.
-
-For optional compiled arithmetic, install `python3 -m pip install -e '.[test,fast]'`.
-This requires a Python version supported by `python-flint>=0.8`.
 
 ## Limits
 
