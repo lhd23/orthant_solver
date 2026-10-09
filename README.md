@@ -3,11 +3,11 @@
 # Gaussian orthant probabilities
 
 Compute multivariate Gaussian orthant and box probabilities with configurable
-precision. The package makes heavy use of [BootLoops](https://github.com/BootLoops-ai/bootloops)
+precision. The package is built around [BootLoops](https://github.com/BootLoops-ai/bootloops)
 for numerical integration and transport, and SymPy for symbolic preparation.
-Use this code if your number one concern is having a high-precision estimate, rather
-than having something that is fast and reasonably precise.
-This code yields estimates to arbitrary precision.
+
+This method is ideally suited to orthants in dimensions d=3 to around d=12.
+Little attempt was made to make this code fast; precision was the goal here.
 
 See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
 for the methods and their derivation.
