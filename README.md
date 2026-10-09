@@ -12,6 +12,10 @@ This code yields estimates to arbitrary precision.
 See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
 for the methods and their derivation.
 
+<img src="output/images/flopscope_solver_error_comparison_1x3.png"
+     alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
+     width="100%">
+
 ## Installation
 
 Requires Python 3.9 or later and a local BootLoops checkout. From the project directory:
