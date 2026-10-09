@@ -5,7 +5,7 @@
 Compute multivariate Gaussian orthant and box probabilities to arbitrary
 precision.
 
-The evaluation method is based on a favourite trick of particle physics:
+The evaluation method is based on a favourite trick of particle physicists:
 introduce a 'time' variable to recast the integral as an ordinary differential equation
 (here constructed symbolically using SymPy).
 This is what is done in [BootLoops](https://github.com/BootLoops-ai/bootloops) on
