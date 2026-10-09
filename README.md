@@ -3,14 +3,20 @@
 # Gaussian orthant probabilities
 
 Compute multivariate Gaussian orthant and box probabilities with configurable
-precision. The package is built around [BootLoops](https://github.com/BootLoops-ai/bootloops)
-for numerical integration and transport, and SymPy for symbolic preparation.
+precision.
 
-This method is ideally suited to orthants in dimensions d=3 to around d=12.
-Little attempt was made to make this code fast; precision was the goal here.
+The evaluation method is based on a favourite trick of particle physics:
+introduce a 'time' variable to recast the integral as an ordinary differential equation
+(here constructed symbolically using SymPy).
+This is what is done in [BootLoops](https://github.com/BootLoops-ai/bootloops) on
+which this code is based.
 
-See the [mathematical documentation](output/pdf/gaussian_orthant_methods.pdf)
-for the methods and their derivation.
+The method can achieve high numerical precision, but the number of boundary integrals
+grows rapidly with dimension. It is most practical for low to moderate dimensions,
+roughly d=3–15, depending on covariance structure and requested accuracy.
+For substantially higher dimensions, consider an alternative method.
+
+See [documentation](output/pdf/gaussian_orthant_methods.pdf) for detailed description of the method used.
 
 
 ## Performance
