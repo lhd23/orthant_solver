@@ -2,7 +2,7 @@
 
 # Gaussian orthant probabilities
 
-Compute multivariate Gaussian orthant and box probabilities with configurable
+Compute multivariate Gaussian orthant and box probabilities to arbitrary
 precision.
 
 The evaluation method is based on a favourite trick of particle physics:
@@ -16,18 +16,21 @@ grows rapidly with dimension. It is most practical for low to moderate dimension
 roughly d=3–15, depending on covariance structure and requested accuracy.
 For substantially higher dimensions, consider an alternative method.
 
-See [documentation](output/pdf/gaussian_orthant_methods.pdf) for detailed description of the method used.
+See [documentation](output/pdf/gaussian_orthant_methods.pdf) for a detailed description of the method.
 
 
 ## Performance
-`orthant_solver` has been compared with three popular methods: (i) randomized lattice integration (Genz-Bretz 2009),
-(ii) minimax exponential tilting (Botev 2016), and (iii) recursive deterministic integration (Miwa et al. 2003).
-A generic unstructured covariance matrix is assumed.
+Below is a comparison of `orthant_solver` against three popular methods:
+(i) randomized lattice integration (Genz-Bretz 2009),
+(ii) minimax exponential tilting (Botev 2016), and
+(iii) recursive deterministic integration (Miwa et al. 2003).
+In this comparison the positive orthant is evaluated in dimensions 3,5 and 10.
+A dense full-rank covariance matrix is used in each.
 
 <img src="output/images/flopscope_solver_error_comparison_1x3.png"
      alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
      width="100%">
-(Note: in third plot green curve is out of frame to the top right.)
+(Note: in the third plot the green curve is out of frame to the top right.)
 
 The solver outperforms all other methods (much more so as the number of dimensions increases).
 Other methods should be considered (e.g. Botev's method) if integrating
@@ -35,7 +38,7 @@ much higher than ten dimensions.
 
 ## Usage
 
-To evaluate the eight domains labelled (a)-(h) in the banner:
+To evaluate the eight domains labelled (a)-(h) in the banner image above:
 
 ```python
 from gaussian_orthant import gaussian_probability
