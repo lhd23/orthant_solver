@@ -91,26 +91,26 @@ need more precision
 than ordinary floating-point numbers. Use `result.as_dict()` to display the
 requested digits.)
 
-
 Examples can also be run from the command line:
 
 ```sh
 python3 -m gaussian_orthant examples/orthant.json
-python3 -m gaussian_orthant examples/botev_example_i.json
-python3 compare_solvers.py
 ```
 
-The comparison script calls all four functions and prints probabilities,
-independently measured relative errors, and runtimes alongside SciPy.
-Use `--digits 8 10` to compare multiple accuracy targets, or
-`--rtol 1e-4 1e-6` to compare the faster tolerance mode, and
-`--match-achieved` to require comparable achieved errors. A shared requested
-accuracy does not guarantee that both solvers achieve the same error.
+## Performance
+We compared `orthant_solver` with three popular methods: (i) randomized lattice integration (Genz-Bretz 2009),
+(ii) minimax exponential tilting (Botev 2016), and (iii) recursive deterministic integration (Miwa et al. 2003).
+A generic unstructured covariance matrix is assumed.
 
 <img src="output/images/flopscope_solver_error_comparison_1x3.png"
      alt="Floating-point operation count versus relative error for three-, five-, and ten-dimensional orthant integrals"
      width="100%">
 
+Our solver outperforms all other methods, and much more so as the number of dimensions increases.
+Other methods should be considered (e.g. Botev's method) if integrating
+much higher than ten dimensions.
+
+Note: in third plot green curve is out of frame (top right).
 
 ## Installation
 
