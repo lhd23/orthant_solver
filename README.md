@@ -39,7 +39,7 @@ much higher than ten dimensions.
 
 ## Usage
 
-To evaluate the eight domains labelled (a)-(h) in the banner image above:
+To evaluate the domains labelled (a)-(e) in the banner image above:
 
 ```python
 from gaussian_orthant import gaussian_probability
@@ -53,6 +53,7 @@ a = gaussian_probability(
        covariance=cov, mean=mean, digits=25)
 print(a.probability)
 print(a.log_probability)
+print(a.diagnostics)
 
 # (b) Shifted mixed orthant
 b = gaussian_probability(
@@ -81,37 +82,10 @@ e = gaussian_probability(
     covariance=cov, mean=mean, digits=25)
 print(e.probability)
 print(e.log_probability)
-
-# Three-dimensional orthants
-cov = [[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]]
-mean = [0, 0, 0]
-
-# (f) Positive orthant
-f = gaussian_probability(
-    lower=[0, 0, 0], upper=["inf", "inf", "inf"],
-    covariance=cov, mean=mean, digits=25)
-print(f.probability)
-print(f.log_probability)
-
-# (g) Finite box
-g = gaussian_probability(
-    lower=[0, 0, 0], upper=["1.7", "1.6", "1.6"],
-    covariance=cov, mean=mean, digits=25)
-print(g.probability)
-print(g.log_probability)
-
-# (h) Semi-infinite box
-h = gaussian_probability(
-    lower=[0, 0, 0], upper=["1.7", "1.6", "inf"],
-    covariance=cov, mean=mean, digits=25)
-print(h.probability)
-print(h.log_probability)
 ```
-
-- Accepts a covariance or precision matrix (inverse covariance), nonzero means, e.g.  e.g. `mean=[0.2, -0.3]`
-- Returns both the probability and its natural logarithm, with convergence diagnostics.
-- Provides specialized routines for exchangeable precision matrices and equal-correlation models.
-- Evaluation of higher-dimensional Gaussians and domains also possible.
+To evaulate higher-dimensional domains set the `mean`, `covariance`, `lower` and `upper`
+arguments accordingly.
+Note: instead of `covariance` one can pass the `precision` matrix (inverse covariance).
 
 In addition to `gaussian_probability` (for boxes with arbitrary lower and upper bounds)
 one can also call:
