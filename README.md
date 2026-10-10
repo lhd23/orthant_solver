@@ -20,7 +20,8 @@ See [documentation](output/pdf/gaussian_orthant_methods.pdf) for a detailed desc
 
 
 ## Performance
-Below is a comparison of `orthant_solver` against three popular methods:
+Below is a comparison of `orthant_solver` against three widely used methods
+for computing Gaussian probabilities:
 (i) randomized lattice integration (Genz-Bretz 2009),
 (ii) minimax exponential tilting (Botev 2016), and
 (iii) recursive deterministic integration (Miwa et al. 2003).
@@ -43,56 +44,68 @@ To evaluate the eight domains labelled (a)-(h) in the banner image above:
 ```python
 from gaussian_orthant import gaussian_probability
 
+cov = [[1, 0.5], [0.5, 1]]
+mean = [0, 0]
+
 # (a) Positive orthant
-gaussian_probability(
-    lower=[0, 0], upper=["inf", "inf"],
-    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
-)
+a = gaussian_probability(
+       lower=[0, 0], upper=["inf", "inf"],
+       covariance=cov, mean=mean, digits=25)
+print(a.probability)
+print(a.log_probability)
 
 # (b) Shifted mixed orthant
-gaussian_probability(
+b = gaussian_probability(
     lower=["0.6", "-inf"], upper=["inf", "0.8"],
-    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(b.probability)
+print(b.log_probability)
 
 # (c) Finite box
-gaussian_probability(
+c = gaussian_probability(
     lower=["-0.9", "-0.7"], upper=["1.2", "1.3"],
-    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(c.probability)
+print(c.log_probability)
 
 # (d) Semi-infinite box
-gaussian_probability(
+d = gaussian_probability(
     lower=[-1, "-0.6"], upper=[1, "inf"],
-    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(d.probability)
+print(d.log_probability)
 
 # (e) Unbounded strip
-gaussian_probability(
+e = gaussian_probability(
     lower=["-inf", "-0.7"], upper=["inf", 1],
-    covariance=[[1, 0.5], [0.5, 1]], mean=[0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(e.probability)
+print(e.log_probability)
 
-# (f) Positive orthant (3 dimensions)
-gaussian_probability(
+# Three-dimensional orthants
+cov = [[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]]
+mean = [0, 0, 0]
+
+# (f) Positive orthant
+f = gaussian_probability(
     lower=[0, 0, 0], upper=["inf", "inf", "inf"],
-    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
-    mean=[0, 0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(f.probability)
+print(f.log_probability)
 
-# (g) Finite box (3 dimensions)
-gaussian_probability(
+# (g) Finite box
+g = gaussian_probability(
     lower=[0, 0, 0], upper=["1.7", "1.6", "1.6"],
-    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
-    mean=[0, 0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(g.probability)
+print(g.log_probability)
 
-# (h) Semi-infinite box (3 dimensions)
-gaussian_probability(
+# (h) Semi-infinite box
+h = gaussian_probability(
     lower=[0, 0, 0], upper=["1.7", "1.6", "inf"],
-    covariance=[[1, 0.5, 0.5], [0.5, 1, 0.5], [0.5, 0.5, 1]],
-    mean=[0, 0, 0], digits=25,
-)
+    covariance=cov, mean=mean, digits=25)
+print(h.probability)
+print(h.log_probability)
 ```
 
 - Accepts a covariance or precision matrix (inverse covariance), nonzero means, e.g.  e.g. `mean=[0.2, -0.3]`
@@ -111,9 +124,9 @@ For faster evaluation, specify `rtol` instead of `digits`, for example
 `equicorrelated_probability(10, correlation=0.5, rtol=1e-6)`. The result
 includes `rtol` and `estimated_relative_error`.
 (Note: use decimal strings or `fractions.Fraction`, as in the code above, when inputs
-need more precision
-than ordinary floating-point numbers. Use `result.as_dict()` to display the
-requested digits.)
+need more precision than ordinary floating-point numbers. The result displays a
+compact summary; access `result.probability` or `result.log_probability` for a value,
+and use `result.as_dict()` for the full diagnostic record.)
 
 Examples can also be run from the command line:
 
